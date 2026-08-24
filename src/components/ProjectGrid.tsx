@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, Search, MapPin, Play, Pause, Sparkles } from 'lucide-react';
-import { Project, ProjectCategory } from '../types/architecture';
+import { Project, ProjectCategory, CategoryItem } from '../types/architecture';
+import { DEFAULT_CATEGORIES } from '../data/projectsData';
 import { NextImage } from './NextImage';
 
 interface ProjectGridProps {
   projects: Project[];
+  categories?: CategoryItem[];
   onSelectProject: (project: Project) => void;
   onNavigateContact: () => void;
   showAllProjectsView?: boolean;
@@ -13,6 +15,7 @@ interface ProjectGridProps {
 
 export function ProjectGrid({
   projects,
+  categories = DEFAULT_CATEGORIES,
   onSelectProject,
   onNavigateContact,
   showAllProjectsView = false,
@@ -85,12 +88,9 @@ export function ProjectGrid({
     setTimeout(() => setIsAnimating(false), 500);
   };
 
-  const categories: { id: ProjectCategory; label: string }[] = [
+  const categoryOptions: { id: ProjectCategory; label: string }[] = [
     { id: 'all', label: 'Toutes les Réalisations' },
-    { id: 'residential', label: 'Résidentiel d’Exception' },
-    { id: 'heritage', label: 'Rénovation Patrimoniale' },
-    { id: 'commercial', label: 'Tertiaire & Bas-Carbone' },
-    { id: 'hospitality', label: 'Hôtellerie & Domaines' },
+    ...categories.map((c) => ({ id: c.id, label: c.label })),
   ];
 
   const filteredProjects = projects.filter((p) => {
@@ -356,7 +356,7 @@ export function ProjectGrid({
             <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8">
               {/* Category Pills */}
               <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                {categories.map((cat) => {
+                {categoryOptions.map((cat) => {
                   const isActive = activeCategory === cat.id;
                   return (
                     <button

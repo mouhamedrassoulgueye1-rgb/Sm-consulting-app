@@ -10,8 +10,8 @@ import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { AdminLogin } from './components/admin/AdminLogin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
-import { INITIAL_PROJECTS_DATA } from './data/projectsData';
-import { Project } from './types/architecture';
+import { INITIAL_PROJECTS_DATA, DEFAULT_CATEGORIES } from './data/projectsData';
+import { Project, CategoryItem } from './types/architecture';
 
 type AppRoute = 'home' | 'all-projects' | 'about' | 'admin-login' | 'admin-dashboard';
 
@@ -27,6 +27,22 @@ export default function App() {
       // Fallback
     }
     return INITIAL_PROJECTS_DATA;
+  });
+
+  // Load categories from localStorage or default
+  const [categories, setCategories] = useState<CategoryItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('synoreyni_custom_categories');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch {
+      // Fallback
+    }
+    return DEFAULT_CATEGORIES;
   });
 
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
@@ -51,6 +67,15 @@ export default function App() {
       // Ignore
     }
   }, [projects]);
+
+  // Save categories to localStorage whenever changed
+  useEffect(() => {
+    try {
+      localStorage.setItem('synoreyni_custom_categories', JSON.stringify(categories));
+    } catch {
+      // Ignore
+    }
+  }, [categories]);
 
   // Next.js-like Middleware Route Guard for /admin/*
   useEffect(() => {
@@ -148,7 +173,7 @@ export default function App() {
     handleNavigateSection('contact');
   };
 
-  // Admin CRUD Handlers
+  // Admin CRUD Handlers - Projects
   const handleAddProject = (newProject: Project) => {
     setProjects((prev) => [newProject, ...prev]);
   };
@@ -161,6 +186,64 @@ export default function App() {
 
   const handleDeleteProject = (projectId: string) => {
     setProjects((prev) => prev.filter((p) => p.id !== projectId));
+  };
+
+  // Admin CRUD Handlers - Categories
+  const handleAddCategory = (newCategory: CategoryItem) => {
+    setCategories((prev) => {
+      if (prev.some((c) => c.id === newCategory.id)) {
+        return prev;
+      }
+      return [...prev, newCategory];
+    });
+  };
+
+  const handleUpdateCategory = (updatedCategory: CategoryItem) => {
+    setCategories((prev) =>
+      prev.map((c) => (c.id === updatedCategory.id ? updatedCategory : c))
+    );
+    // Update project category labels if needed
+    setProjects((prevProjects) =>
+      prevProjects.map((p) => {
+        if (p.category === updatedCategory.id) {
+          return {
+            ...p,
+            categoryLabel: updatedCategory.label,
+            specs: {
+              ...p.specs,
+              categoryLabel: updatedCategory.label,
+            },
+          };
+        }
+        return p;
+      })
+    );
+  };
+
+  const handleDeleteCategory = (categoryId: string) => {
+    setCategories((prev) => prev.filter((c) => c.id !== categoryId));
+    // If any project has this category, fallback to remaining first category or 'residential'
+    const fallbackCategory = categories.find((c) => c.id !== categoryId) || {
+      id: 'residential',
+      label: 'Résidentiel d’Exception',
+    };
+    setProjects((prevProjects) =>
+      prevProjects.map((p) => {
+        if (p.category === categoryId) {
+          return {
+            ...p,
+            category: fallbackCategory.id,
+            categoryLabel: fallbackCategory.label,
+            specs: {
+              ...p.specs,
+              category: fallbackCategory.id,
+              categoryLabel: fallbackCategory.label,
+            },
+          };
+        }
+        return p;
+      })
+    );
   };
 
   const handleAdminLogout = () => {
@@ -190,9 +273,13 @@ export default function App() {
     return (
       <AdminDashboard
         projects={projects}
+        categories={categories}
         onAddProject={handleAddProject}
         onUpdateProject={handleUpdateProject}
         onDeleteProject={handleDeleteProject}
+        onAddCategory={handleAddCategory}
+        onUpdateCategory={handleUpdateCategory}
+        onDeleteCategory={handleDeleteCategory}
         onReturnToPublicSite={() => navigateToRoute('home', '/')}
         onLogout={handleAdminLogout}
       />
@@ -232,6 +319,7 @@ export default function App() {
             {/* Dynamic Animated Carousel Slider */}
             <ProjectGrid
               projects={projects}
+              categories={categories}
               onSelectProject={(project) => setSelectedProject(project)}
               onNavigateContact={() => handleNavigateSection('contact')}
               showAllProjectsView={false}
@@ -255,6 +343,7 @@ export default function App() {
           <div className="pt-20">
             <ProjectGrid
               projects={projects}
+              categories={categories}
               onSelectProject={(project) => setSelectedProject(project)}
               onNavigateContact={() => handleNavigateSection('contact')}
               showAllProjectsView={true}

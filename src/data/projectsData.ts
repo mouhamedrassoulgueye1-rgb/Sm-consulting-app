@@ -1,4 +1,31 @@
-import { Project } from '../types/architecture';
+import { Project, CategoryItem } from '../types/architecture';
+
+export const DEFAULT_CATEGORIES: CategoryItem[] = [
+  {
+    id: 'residential',
+    label: 'Résidentiel d’Exception',
+    description: 'Villas d’architecte, résidences privées & domaines côtiers',
+    isDefault: true,
+  },
+  {
+    id: 'heritage',
+    label: 'Rénovation Patrimoniale',
+    description: 'Restauration de caractère & réhabilitation de prestige',
+    isDefault: true,
+  },
+  {
+    id: 'commercial',
+    label: 'Tertiaire & Bas-Carbone',
+    description: 'Sièges d’entreprises, pavillons tertiaires & espaces de bureaux',
+    isDefault: true,
+  },
+  {
+    id: 'hospitality',
+    label: 'Hôtellerie & Domaines',
+    description: 'Eco-lodges, resorts de luxe & boutique hôtels',
+    isDefault: true,
+  },
+];
 
 export const INITIAL_PROJECTS_DATA: Project[] = [
   {

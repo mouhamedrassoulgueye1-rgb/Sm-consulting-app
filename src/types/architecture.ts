@@ -1,4 +1,11 @@
-export type ProjectCategory = 'all' | 'residential' | 'heritage' | 'commercial' | 'hospitality';
+export type ProjectCategory = string;
+
+export interface CategoryItem {
+  id: string;
+  label: string;
+  description?: string;
+  isDefault?: boolean;
+}
 
 export interface ProjectSpec {
   surface: string;

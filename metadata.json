@@ -1,0 +1,6 @@
+{
+  "name": "Synoreyni Consulting - Architecture & Bâtiment de Prestige",
+  "description": "Cabinet d'ingénierie et d'architecture d'élite Synoreyni Consulting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -24,6 +24,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react';
 import { Project, ProjectCategory, CategoryItem } from '../../types/architecture';
+import { compressImage } from '../../lib/firebase';
 
 interface AdminDashboardProps {
   projects: Project[];
@@ -185,7 +186,7 @@ export function AdminDashboard({
   };
 
   // Upload Hero Image from Local Disk
-  const handleHeroFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHeroFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -194,9 +195,9 @@ export function AdminDashboard({
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Url = event.target?.result as string;
+    try {
+      showNotification('Traitement et optimisation de la photo en cours...');
+      const base64Url = await compressImage(file, 1920, 1080, 0.82);
       if (base64Url) {
         setFormData((prev) => {
           const updatedGallery = prev.galleryImages.includes(base64Url)
@@ -208,41 +209,40 @@ export function AdminDashboard({
             galleryImages: updatedGallery,
           };
         });
-        showNotification('Photo principale importée avec succès.');
+        showNotification('Photo principale importée & synchronisée.');
       }
-    };
-    reader.readAsDataURL(file);
+    } catch {
+      showNotification('Erreur lors de la lecture du fichier image.');
+    }
     e.target.value = '';
   };
 
   // Upload Multiple Gallery Images from Local Disk
-  const handleMultipleGalleryUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMultipleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const fileList = Array.from(files) as File[];
-    let loadedCount = 0;
-    const newBase64Images: string[] = [];
+    const fileList = (Array.from(files) as File[]).filter((f) => f.type.startsWith('image/'));
+    if (fileList.length === 0) {
+      showNotification('Aucune image valide trouvée.');
+      return;
+    }
 
-    fileList.forEach((file) => {
-      if (!file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const base64 = event.target?.result as string;
-        if (base64) {
-          newBase64Images.push(base64);
-        }
-        loadedCount++;
-        if (loadedCount === fileList.length) {
-          setFormData((prev) => ({
-            ...prev,
-            galleryImages: [...prev.galleryImages, ...newBase64Images],
-          }));
-          showNotification(`${newBase64Images.length} photo(s) ajoutée(s) à la galerie.`);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    showNotification(`Optimisation de ${fileList.length} photo(s) en cours...`);
+    try {
+      const compressedList = await Promise.all(
+        fileList.map((file) => compressImage(file, 1920, 1080, 0.82))
+      );
+      const validImages = compressedList.filter(Boolean);
+
+      setFormData((prev) => ({
+        ...prev,
+        galleryImages: [...prev.galleryImages, ...validImages],
+      }));
+      showNotification(`${validImages.length} photo(s) ajoutée(s) et prêtes pour la synchronisation.`);
+    } catch {
+      showNotification('Erreur lors du traitement des images.');
+    }
 
     e.target.value = '';
   };
@@ -326,7 +326,7 @@ export function AdminDashboard({
   };
 
   // Handle Replacement File Selected from Disk for a specific photo
-  const handleReplaceSingleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleReplaceSingleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -335,18 +335,20 @@ export function AdminDashboard({
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64 = event.target?.result as string;
+    try {
+      showNotification('Optimisation de la photo en cours...');
+      const base64 = await compressImage(file, 1920, 1080, 0.82);
       if (base64 && photoEditState) {
         setPhotoEditState({
           ...photoEditState,
           newUrl: base64,
           previewUrl: base64,
         });
+        showNotification('Nouvelle photo prête à être enregistrée.');
       }
-    };
-    reader.readAsDataURL(file);
+    } catch {
+      showNotification('Erreur lors du traitement de l’image.');
+    }
     e.target.value = '';
   };
 

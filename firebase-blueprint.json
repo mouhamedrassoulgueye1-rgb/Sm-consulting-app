@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Architectural project in portfolio",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "slug": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "location": { "type": "string" },
+        "category": { "type": "string" },
+        "categoryLabel": { "type": "string" },
+        "heroImage": { "type": "string" },
+        "galleryImages": { "type": "array", "items": { "type": "string" } },
+        "summary": { "type": "string" },
+        "conceptDescription": { "type": "string" },
+        "isFeatured": { "type": "boolean" },
+        "specs": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "title", "category", "heroImage"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Architectural category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "isDefault": { "type": "boolean" }
+      },
+      "required": ["id", "label"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Public architectural projects"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Public architectural categories"
+    }
+  }
+}

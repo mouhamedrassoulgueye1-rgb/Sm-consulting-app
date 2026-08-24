@@ -12,11 +12,20 @@ import { AdminLogin } from './components/admin/AdminLogin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { INITIAL_PROJECTS_DATA, DEFAULT_CATEGORIES } from './data/projectsData';
 import { Project, CategoryItem } from './types/architecture';
+import {
+  subscribeToProjects,
+  subscribeToCategories,
+  saveProjectToCloud,
+  deleteProjectFromCloud,
+  saveCategoryToCloud,
+  deleteCategoryFromCloud,
+  seedInitialDataIfEmpty,
+} from './lib/firebase';
 
 type AppRoute = 'home' | 'all-projects' | 'about' | 'admin-login' | 'admin-dashboard';
 
 export default function App() {
-  // Load projects from localStorage or default
+  // Load projects from localStorage or default as initial state
   const [projects, setProjects] = useState<Project[]>(() => {
     try {
       const saved = localStorage.getItem('synoreyni_custom_projects');
@@ -44,6 +53,38 @@ export default function App() {
     }
     return DEFAULT_CATEGORIES;
   });
+
+  // Real-time Cloud Synchronization via Firebase Firestore
+  useEffect(() => {
+    seedInitialDataIfEmpty();
+
+    const unsubProjects = subscribeToProjects((cloudProjects) => {
+      if (cloudProjects && cloudProjects.length > 0) {
+        setProjects(cloudProjects);
+        try {
+          localStorage.setItem('synoreyni_custom_projects', JSON.stringify(cloudProjects));
+        } catch {
+          // Local storage quota fallback
+        }
+      }
+    });
+
+    const unsubCategories = subscribeToCategories((cloudCategories) => {
+      if (cloudCategories && cloudCategories.length > 0) {
+        setCategories(cloudCategories);
+        try {
+          localStorage.setItem('synoreyni_custom_categories', JSON.stringify(cloudCategories));
+        } catch {
+          // Local storage quota fallback
+        }
+      }
+    });
+
+    return () => {
+      unsubProjects();
+      unsubCategories();
+    };
+  }, []);
 
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
     if (typeof window !== 'undefined') {
@@ -176,16 +217,25 @@ export default function App() {
   // Admin CRUD Handlers - Projects
   const handleAddProject = (newProject: Project) => {
     setProjects((prev) => [newProject, ...prev]);
+    saveProjectToCloud(newProject).catch((err) =>
+      console.error('Failed to sync new project to Firestore:', err)
+    );
   };
 
   const handleUpdateProject = (updatedProject: Project) => {
     setProjects((prev) =>
       prev.map((p) => (p.id === updatedProject.id ? updatedProject : p))
     );
+    saveProjectToCloud(updatedProject).catch((err) =>
+      console.error('Failed to sync updated project to Firestore:', err)
+    );
   };
 
   const handleDeleteProject = (projectId: string) => {
     setProjects((prev) => prev.filter((p) => p.id !== projectId));
+    deleteProjectFromCloud(projectId).catch((err) =>
+      console.error('Failed to delete project from Firestore:', err)
+    );
   };
 
   // Admin CRUD Handlers - Categories
@@ -196,17 +246,23 @@ export default function App() {
       }
       return [...prev, newCategory];
     });
+    saveCategoryToCloud(newCategory).catch((err) =>
+      console.error('Failed to sync new category to Firestore:', err)
+    );
   };
 
   const handleUpdateCategory = (updatedCategory: CategoryItem) => {
     setCategories((prev) =>
       prev.map((c) => (c.id === updatedCategory.id ? updatedCategory : c))
     );
+    saveCategoryToCloud(updatedCategory).catch((err) =>
+      console.error('Failed to sync category update to Firestore:', err)
+    );
     // Update project category labels if needed
     setProjects((prevProjects) =>
       prevProjects.map((p) => {
         if (p.category === updatedCategory.id) {
-          return {
+          const updated = {
             ...p,
             categoryLabel: updatedCategory.label,
             specs: {
@@ -214,6 +270,8 @@ export default function App() {
               categoryLabel: updatedCategory.label,
             },
           };
+          saveProjectToCloud(updated).catch(() => {});
+          return updated;
         }
         return p;
       })
@@ -222,6 +280,9 @@ export default function App() {
 
   const handleDeleteCategory = (categoryId: string) => {
     setCategories((prev) => prev.filter((c) => c.id !== categoryId));
+    deleteCategoryFromCloud(categoryId).catch((err) =>
+      console.error('Failed to delete category from Firestore:', err)
+    );
     // If any project has this category, fallback to remaining first category or 'residential'
     const fallbackCategory = categories.find((c) => c.id !== categoryId) || {
       id: 'residential',
@@ -230,7 +291,7 @@ export default function App() {
     setProjects((prevProjects) =>
       prevProjects.map((p) => {
         if (p.category === categoryId) {
-          return {
+          const updated = {
             ...p,
             category: fallbackCategory.id,
             categoryLabel: fallbackCategory.label,
@@ -240,6 +301,8 @@ export default function App() {
               categoryLabel: fallbackCategory.label,
             },
           };
+          saveProjectToCloud(updated).catch(() => {});
+          return updated;
         }
         return p;
       })

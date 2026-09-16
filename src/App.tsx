@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { FeaturedScrollShowcase } from './components/FeaturedScrollShowcase';
 import { ProjectGrid } from './components/ProjectGrid';
 import { ProjectModal } from './components/ProjectModal';
 import { HomePillars } from './components/HomePillars';
@@ -175,14 +176,14 @@ export default function App() {
     }
 
     if (sectionId === 'contact') {
-      if (currentRoute !== 'home' && currentRoute !== 'about' && currentRoute !== 'all-projects') {
+      if (currentRoute === 'all-projects') {
         navigateToRoute('home', '/');
         setTimeout(() => {
           const element = document.getElementById('contact');
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
           }
-        }, 150);
+        }, 180);
       } else {
         const element = document.getElementById('contact');
         if (element) {
@@ -375,11 +376,17 @@ export default function App() {
           <>
             {/* Hero Section */}
             <Hero
-              onExploreProjects={() => handleNavigateSection('projets')}
+              onExploreProjects={() => handleNavigateSection('featured-scroller')}
               onNavigateContact={() => handleNavigateSection('contact')}
             />
 
-            {/* Dynamic Animated Carousel Slider */}
+            {/* Photos en vedette qui changent au défilement de la page */}
+            <FeaturedScrollShowcase
+              projects={projects}
+              onSelectProject={(project) => setSelectedProject(project)}
+            />
+
+            {/* Réalisations phares sous forme de cartes défilables horizontalement */}
             <ProjectGrid
               projects={projects}
               categories={categories}
@@ -419,10 +426,12 @@ export default function App() {
           </div>
         )}
 
-        {/* Dedicated Contact & Quote Section with Direct WhatsApp Option */}
-        <ContactSection
-          initialProjectTitle={contactPrefillProject}
-        />
+        {/* Dedicated Contact & Quote Section with Direct WhatsApp Option (Only on Home and About pages, excluded from Nos Réalisations) */}
+        {currentRoute !== 'all-projects' && (
+          <ContactSection
+            initialProjectTitle={contactPrefillProject}
+          />
+        )}
       </main>
 
       {/* Deep Dark Footer with Dakar Office, Social Channels & Private Admin Access */}

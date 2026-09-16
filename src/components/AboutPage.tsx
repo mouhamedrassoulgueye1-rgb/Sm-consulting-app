@@ -4,7 +4,12 @@ import {
   ArrowLeft,
   MapPin,
   Sparkles,
+  Compass,
+  ShieldCheck,
+  Building2,
+  Leaf,
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { AGENCY_METRICS } from '../data/projectsData';
 import { NextImage } from './NextImage';
 
@@ -19,10 +24,33 @@ export function AboutPage({
   onNavigateProjects,
   onNavigateContact,
 }: AboutPageProps) {
+  const values = [
+    {
+      icon: Compass,
+      title: 'Conception Bioclimatique',
+      desc: 'Optimisation de la ventilation naturelle, étude d’ensoleillement et adaptation fine au climat soudano-sahélien pour minimiser les charges énergétiques.',
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Rigueur constructive',
+      desc: 'Contrôle qualité strict à chaque étape : études de sols, calculs d’ossatures béton armé et charpentes, conformité aux normes internationales Eurocodes & BAEL.',
+    },
+    {
+      icon: Leaf,
+      title: 'Matières Nobles & Locales',
+      desc: 'Valorisation de la pierre de Rufisque, brique de terre compressée (BTC), bois imputrescibles et enduits minéraux aux teintes chaudes et pérennes.',
+    },
+    {
+      icon: Building2,
+      title: 'Maîtrise d’Œuvre Intégrée',
+      desc: 'De l’esquisse architecturale à la remise des clés : direction des travaux, pilotage des corps d’état et respect scrupuleux des délais et budgets convenus.',
+    },
+  ];
+
   return (
     <div className="pt-24 pb-20 bg-[#FAF9F6] text-[#111111] min-h-screen">
       {/* Top Breadcrumb & Return Bar */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-4 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-4 pb-6">
         <div className="flex items-center justify-between">
           <button
             onClick={onNavigateHome}
@@ -39,7 +67,7 @@ export function AboutPage({
         </div>
       </div>
 
-      {/* Hero Banner for About Page */}
+      {/* Hero Banner for About Page with Scroll-In Effect */}
       <section className="relative py-16 sm:py-24 border-t border-b border-[#E5E2DA] overflow-hidden bg-[#FAF9F6]">
         <div className="absolute inset-0 z-0 pointer-events-none select-none">
           <NextImage
@@ -53,8 +81,13 @@ export function AboutPage({
           <div className="absolute inset-0 bg-grid-slate-light opacity-30" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-          <div className="max-w-4xl space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-4xl space-y-6"
+          >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-[#C5A059]/30 text-[#C5A059] text-xs font-bold uppercase tracking-widest rounded-full shadow-xs">
               <Sparkles className="w-3.5 h-3.5" />
               <span>À Propos de Synoreyni Consulting</span>
@@ -70,18 +103,22 @@ export function AboutPage({
             <p className="text-base sm:text-lg text-[#4A4A4A] font-normal leading-relaxed max-w-3xl">
               Fondé sur une vision où la rigueur technique rencontre la pureté sculpturale, <strong className="text-[#111111] font-semibold">Synoreyni Consulting</strong> conçoit et pilote des projets d’exception à Dakar, au Sénégal et à travers l’Afrique de l’Ouest.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Metrics Counter Bar (50+ Projets) */}
+      {/* Metrics Counter Bar with Scroll Reveal */}
       <section className="py-12 border-b border-[#E5E2DA] bg-white">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center sm:text-left">
             {AGENCY_METRICS.map((metric, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between shadow-xs"
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between shadow-xs hover:border-[#C5A059] transition-colors"
               >
                 <div className="flex items-baseline justify-center sm:justify-start gap-1 mb-2">
                   <span className="font-display text-4xl sm:text-5xl font-bold text-[#111111] tracking-tight">
@@ -95,42 +132,60 @@ export function AboutPage({
                   </span>
                   <span className="text-xs text-[#666666] font-normal">{metric.detail}</span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Atelier Narrative & Philosophical Manifesto */}
+      {/* Atelier Narrative with Scroll Reveal & Image Zoom */}
       <section className="py-20 sm:py-28 relative border-b border-[#E5E2DA]">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Visual Photo Card */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#E5E2DA] shadow-xl">
+            {/* Visual Photo Card with Scroll Animation */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-6 relative"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#E5E2DA] shadow-xl group">
                 <NextImage
                   src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80"
                   alt="Atelier Synoreyni Consulting Dakar"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
                 {/* Quote in card */}
-                <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/95 backdrop-blur-md border border-[#E5E2DA] rounded-xl text-[#111111] shadow-lg">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.4 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="absolute bottom-6 left-6 right-6 p-4 bg-white/95 backdrop-blur-md border border-[#E5E2DA] rounded-xl text-[#111111] shadow-lg"
+                >
                   <p className="text-xs italic font-normal leading-relaxed text-[#333333]">
                     « L'architecture d'exception ne réside pas dans l'ostentation, mais dans la justesse des proportions, la symbiose avec le climat et la rigueur d'exécution. »
                   </p>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#C5A059] mt-2 block font-bold">
                     — Direction de l’Ingénierie, Synoreyni Consulting
                   </span>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Manifesto Text */}
-            <div className="lg:col-span-6 space-y-6 text-[#4A4A4A] font-normal leading-relaxed text-sm sm:text-base">
+            {/* Manifesto Text with Scroll Reveal */}
+            <motion.div
+              initial={{ opacity: 0, x: 25 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-6 space-y-6 text-[#4A4A4A] font-normal leading-relaxed text-sm sm:text-base"
+            >
               <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#C5A059] font-bold">
                 <span className="w-2 h-2 rounded-full bg-[#C5A059]" />
                 Notre Vision & Engagement
@@ -151,7 +206,7 @@ export function AboutPage({
               <div className="pt-4 flex flex-wrap items-center gap-4">
                 <button
                   onClick={onNavigateProjects}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-md cursor-pointer active:scale-95"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-md cursor-pointer active:scale-95 min-h-[44px]"
                 >
                   <span>Voir nos réalisations</span>
                   <ArrowRight className="w-4 h-4" />
@@ -159,20 +214,74 @@ export function AboutPage({
 
                 <button
                   onClick={onNavigateContact}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-[#FAF9F6] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-[#D1D5DB] shadow-xs"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-[#FAF9F6] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-[#D1D5DB] shadow-xs min-h-[44px]"
                 >
                   <span>Prendre contact</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Direct Contact / Devis Banner */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="p-8 sm:p-12 bg-white border border-[#E5E2DA] rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
+      {/* 4 Pillars of Excellence with Staggered Scroll Animation */}
+      <section className="py-20 sm:py-24 bg-white border-b border-[#E5E2DA]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-2xl mx-auto mb-16"
+          >
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#C5A059] font-mono block mb-2">
+              Principes Fondateurs
+            </span>
+            <h2 className="font-display text-2xl sm:text-4xl font-bold uppercase text-[#111111] tracking-tight">
+              Les Piliers de Notre Pratique
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((v, i) => {
+              const Icon = v.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between hover:border-[#C5A059] transition-all hover:shadow-lg shadow-xs"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-white border border-[#E5E2DA] flex items-center justify-center text-[#C5A059] mb-5 shadow-xs">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-display text-lg font-bold text-[#111111] uppercase mb-2">
+                      {v.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[#555555] leading-relaxed">
+                      {v.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Direct Contact / Devis Banner with Scroll Entrance */}
+      <section className="py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+            className="p-8 sm:p-12 bg-white border border-[#E5E2DA] rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl"
+          >
             <div className="space-y-2 text-center lg:text-left">
               <span className="text-xs uppercase tracking-widest font-bold text-[#C5A059] block font-mono">
                 Initiation de Programme
@@ -185,10 +294,10 @@ export function AboutPage({
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
+            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full sm:w-auto">
               <button
                 onClick={onNavigateContact}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-lg active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
               >
                 <span>Demander un Devis / Étude</span>
                 <ArrowRight className="w-4 h-4" />
@@ -196,12 +305,12 @@ export function AboutPage({
 
               <button
                 onClick={onNavigateProjects}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#FAF9F6] hover:bg-white text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-colors border border-[#D1D5DB] cursor-pointer shadow-xs"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#FAF9F6] hover:bg-white text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-lg transition-colors border border-[#D1D5DB] cursor-pointer shadow-xs min-h-[44px]"
               >
                 <span>Explorer les Réalisations</span>
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

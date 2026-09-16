@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, Search, MapPin, Play, Pause, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ArrowUpRight, Search, MapPin, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Project, ProjectCategory, CategoryItem } from '../types/architecture';
 import { DEFAULT_CATEGORIES } from '../data/projectsData';
 import { NextImage } from './NextImage';
@@ -21,13 +22,11 @@ export function ProjectGrid({
   showAllProjectsView = false,
   onToggleAllProjectsView,
 }: ProjectGridProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewAll, setViewAll] = useState(showAllProjectsView);
-  const [isAnimating, setIsAnimating] = useState(false);
+
+  const horizontalScrollRef = useRef<HTMLDivElement>(null);
 
   // Synchronize internal state with parent prop if provided
   useEffect(() => {
@@ -35,58 +34,7 @@ export function ProjectGrid({
   }, [showAllProjectsView]);
 
   const featuredProjects = projects.filter((p) => p.isFeatured !== false);
-  const carouselProjects = featuredProjects.length > 0 ? featuredProjects : projects;
-
-  const SLIDE_DURATION = 5000; // 5 seconds
-  const PROGRESS_INTERVAL = 50; // update progress every 50ms
-
-  // Dynamic Progress bar and auto-slide timer
-  useEffect(() => {
-    if (viewAll || isPaused || carouselProjects.length <= 1) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          triggerNextSlide();
-          return 0;
-        }
-        return prev + (PROGRESS_INTERVAL / SLIDE_DURATION) * 100;
-      });
-    }, PROGRESS_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [carouselProjects.length, isPaused, viewAll, currentIndex]);
-
-  const triggerNextSlide = () => {
-    setIsAnimating(true);
-    setCurrentIndex((prev) => (prev + 1) % carouselProjects.length);
-    setProgress(0);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const handlePrev = () => {
-    setIsAnimating(true);
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + carouselProjects.length) % carouselProjects.length);
-    setProgress(0);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const handleNext = () => {
-    setIsAnimating(true);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselProjects.length);
-    setProgress(0);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const handleSelectSlide = (idx: number) => {
-    if (idx === currentIndex) return;
-    setIsAnimating(true);
-    setCurrentIndex(idx);
-    setProgress(0);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
+  const displayFeatured = featuredProjects.length > 0 ? featuredProjects : projects.slice(0, 5);
 
   const categoryOptions: { id: ProjectCategory; label: string }[] = [
     { id: 'all', label: 'Toutes les Réalisations' },
@@ -108,291 +56,215 @@ export function ProjectGrid({
     if (onToggleAllProjectsView) {
       onToggleAllProjectsView(true);
     }
-  };
-
-  const handleCloseAllProjects = () => {
-    setViewAll(false);
-    if (onToggleAllProjectsView) {
-      onToggleAllProjectsView(false);
+    const el = document.getElementById('projets');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const currentProject = carouselProjects[currentIndex] || carouselProjects[0];
+  const scrollHorizontal = (direction: 'left' | 'right') => {
+    if (horizontalScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -420 : 420;
+      horizontalScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section
       id="projets"
-      className={`${viewAll ? 'pt-28 pb-20 sm:pt-36 sm:pb-28' : 'py-20 sm:py-28'} bg-[#FAF9F6] relative border-b border-[#E5E2DA]`}
+      className={`${viewAll ? 'pt-24 pb-20 sm:pt-32 sm:pb-28' : 'py-20 sm:py-28'} bg-[#FAF9F6] relative border-b border-[#E5E2DA]`}
     >
       {/* Background architectural light grid */}
       <div className="absolute inset-0 bg-grid-slate-light opacity-30 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#E5E2DA]">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8 pb-6 border-b border-[#E5E2DA]"
+        >
           <div>
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#C5A059] font-bold mb-2">
+            <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-[#C5A059] font-bold mb-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
-              Portfolio & Ouvrages
+              Portfolio
             </div>
-            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-[#111111]">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tight text-[#111111]">
               {viewAll ? 'Toutes Nos Réalisations' : 'Réalisations Phares'}
             </h2>
           </div>
 
-          <p className="text-sm sm:text-base text-[#4A4A4A] font-normal max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#4A4A4A] font-normal max-w-lg leading-relaxed">
             {viewAll
-              ? 'Découvrez l’intégralité de nos projets d’architecture, réhabilitations et constructions de prestige au Sénégal et en Afrique de l’Ouest.'
-              : 'Chaque ouvrage concrétise une vision architecturale sur-mesure alliant confort bioclimatique, noblesse des matériaux et rigueur constructive.'}
+              ? 'Explorez l’intégralité de nos projets d’architecture et constructions au Sénégal et en Afrique de l’Ouest.'
+              : 'Découvrez nos réalisations phares défilables horizontalement.'}
           </p>
-        </div>
+        </motion.div>
 
-        {/* View 1: AUTO CAROUSEL SLIDER WITH DYNAMIC ANIMATION */}
+        {/* View 1: HORIZONTAL SCROLLING CARDS FOR FEATURED PROJECTS */}
         {!viewAll ? (
-          <div
-            className="relative"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {/* Top Carousel Status Controls */}
-            <div className="flex items-center justify-between gap-4 mb-4">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-[#C5A059] bg-white px-3 py-1 border border-[#E5E2DA] rounded shadow-xs">
-                  {String(currentIndex + 1).padStart(2, '0')} / {String(carouselProjects.length).padStart(2, '0')}
+          <div>
+            {/* Horizontal Carousel Controls & Info */}
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-2 text-xs text-[#555555] font-mono">
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+                <span className="font-bold text-[#111111] uppercase tracking-wider">
+                  Défilement Horizontal
                 </span>
-                <span className="text-xs font-mono text-[#555555] hidden sm:inline uppercase tracking-widest text-[11px]">
-                  {currentProject.title}
-                </span>
+                <span className="hidden sm:inline">• Glissez ou utilisez les flèches</span>
               </div>
 
-              {/* Pause/Play toggle button for accessibility */}
-              <button
-                onClick={() => setIsPaused(!isPaused)}
-                className="text-xs font-mono text-[#555555] hover:text-[#111111] flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-[#F4F1EA] border border-[#E5E2DA] rounded-md transition-colors cursor-pointer"
-                title={isPaused ? 'Reprendre le diaporama' : 'Mettre en pause'}
-              >
-                {isPaused ? <Play className="w-3 h-3 text-[#C5A059]" /> : <Pause className="w-3 h-3 text-[#555555]" />}
-                <span className="hidden sm:inline">{isPaused ? 'Lecture' : 'Pause'}</span>
-              </button>
+              {/* Arrow navigation buttons */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => scrollHorizontal('left')}
+                  className="w-10 h-10 rounded-lg bg-white border border-[#E5E2DA] flex items-center justify-center text-[#111111] hover:text-[#C5A059] hover:border-[#C5A059] transition-all shadow-xs cursor-pointer active:scale-95"
+                  aria-label="Faire défiler vers la gauche"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                <button
+                  onClick={() => scrollHorizontal('right')}
+                  className="w-10 h-10 rounded-lg bg-white border border-[#E5E2DA] flex items-center justify-center text-[#111111] hover:text-[#C5A059] hover:border-[#C5A059] transition-all shadow-xs cursor-pointer active:scale-95"
+                  aria-label="Faire défiler vers la droite"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
-            {/* Main Featured Slide Container */}
-            <div className="relative overflow-hidden border border-[#E5E2DA] bg-white shadow-xl rounded-2xl">
-              {/* Dynamic Live Progress Bar across the top edge */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-[#E5E2DA] z-30 overflow-hidden">
+            {/* Horizontal Track Container */}
+            <div
+              ref={horizontalScrollRef}
+              className="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-[#C5A059]/40 scrollbar-track-transparent select-none"
+              style={{ scrollBehavior: 'smooth' }}
+            >
+              {displayFeatured.map((project, idx) => (
                 <div
-                  className="h-full bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] transition-all duration-75 ease-linear"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] sm:min-h-[520px]">
-                {/* Image Section with dynamic transition */}
-                <div
-                  className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto h-full min-h-[300px] cursor-pointer group overflow-hidden"
-                  onClick={() => onSelectProject(currentProject)}
+                  key={project.id}
+                  onClick={() => onSelectProject(project)}
+                  className="snap-start shrink-0 w-[300px] sm:w-[380px] md:w-[420px] bg-white border border-[#E5E2DA] hover:border-[#C5A059] rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl group cursor-pointer flex flex-col justify-between"
                 >
-                  <div
-                    key={currentProject.id}
-                    className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                      isAnimating ? 'opacity-90 scale-[1.02]' : 'opacity-100 scale-100'
-                    }`}
-                  >
+                  {/* Photo area */}
+                  <div className="relative aspect-[16/11] w-full overflow-hidden bg-[#EAE7DC]">
                     <NextImage
-                      src={currentProject.heroImage}
-                      alt={currentProject.title}
+                      src={project.heroImage}
+                      alt={project.title}
                       fill
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      sizes="(max-width: 768px) 300px, 420px"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
-                  </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 via-transparent to-transparent lg:hidden" />
-
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] text-white text-xs font-bold uppercase tracking-wider shadow-md rounded">
-                      {currentProject.categoryLabel}
-                    </span>
-                  </div>
-
-                  {/* Mobile Quick Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white lg:hidden z-10">
-                    <p className="text-xs font-mono text-[#D4AF37] mb-1">{currentProject.location}</p>
-                    <h3 className="text-xl font-bold font-display uppercase">{currentProject.title}</h3>
-                  </div>
-                </div>
-
-                {/* Information Panel */}
-                <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between bg-white text-[#111111]">
-                  <div>
-                    <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-[#C5A059] uppercase tracking-widest mb-3 font-semibold">
-                      <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
-                      <span>{currentProject.location}</span>
-                      <span className="text-[#D1D5DB]">•</span>
-                      <span>Livraison {currentProject.specs.year}</span>
+                    <div className="absolute top-3 left-3 z-10">
+                      <span className="px-3 py-1 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] text-white text-[11px] font-bold uppercase tracking-wider rounded shadow-md">
+                        {project.categoryLabel}
+                      </span>
                     </div>
 
-                    <h3 className="hidden lg:block font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[#111111] mb-2">
-                      {currentProject.title}
-                    </h3>
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="px-2.5 py-1 bg-black/60 backdrop-blur-md text-white text-[11px] font-mono font-bold rounded">
+                        0{idx + 1}
+                      </span>
+                    </div>
 
-                    <p className="text-xs sm:text-sm text-[#C5A059] font-medium italic mb-4">
-                      {currentProject.subtitle}
-                    </p>
-
-                    <p className="text-sm text-[#4A4A4A] font-normal leading-relaxed mb-6 line-clamp-4">
-                      {currentProject.summary}
-                    </p>
-
-                    {/* Quick Specs */}
-                    <div className="grid grid-cols-2 gap-3 p-3.5 bg-[#FAF9F6] border border-[#E5E2DA] rounded-lg mb-6 text-xs">
-                      <div>
-                        <span className="text-[#777777] block text-[10px] uppercase font-bold">Surface Utile</span>
-                        <span className="text-[#111111] font-mono font-bold">{currentProject.specs.surface}</span>
-                      </div>
-                      <div>
-                        <span className="text-[#777777] block text-[10px] uppercase font-bold">Maîtrise d’Œuvre</span>
-                        <span className="text-[#C5A059] font-semibold">Synoreyni Consulting</span>
-                      </div>
+                    <div className="absolute bottom-3 right-3 z-10">
+                      <span className="w-8 h-8 rounded-full bg-white/95 text-[#111111] flex items-center justify-center group-hover:bg-[#C5A059] group-hover:text-white transition-colors shadow">
+                        <ArrowUpRight className="w-4 h-4" />
+                      </span>
                     </div>
                   </div>
 
-                  {/* Actions & Carousel Controls */}
-                  <div className="pt-4 border-t border-[#F0ECE1] flex flex-wrap items-center justify-between gap-4">
-                    <button
-                      onClick={() => onSelectProject(currentProject)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all duration-200 cursor-pointer shadow-md active:scale-95"
-                    >
-                      <span>Consulter la Fiche</span>
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
+                  {/* Card Content */}
+                  <div className="p-5 sm:p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                      <div className="flex items-center justify-between text-xs font-mono text-[#777777] mb-2">
+                        <div className="flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                          <span>{project.location}</span>
+                        </div>
+                        <span>{project.specs.year}</span>
+                      </div>
 
-                    {/* Next / Prev Controls */}
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={handlePrev}
-                        className="w-10 h-10 bg-[#FAF9F6] hover:bg-[#C5A059] text-[#111111] hover:text-white border border-[#E5E2DA] rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-90 shadow-xs"
-                        aria-label="Projet précédent"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={handleNext}
-                        className="w-10 h-10 bg-[#FAF9F6] hover:bg-[#C5A059] text-[#111111] hover:text-white border border-[#E5E2DA] rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-90 shadow-xs"
-                        aria-label="Projet suivant"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
+                      <h3 className="font-display text-xl font-bold uppercase text-[#111111] group-hover:text-[#C5A059] transition-colors mb-2">
+                        {project.title}
+                      </h3>
+
+                      <p className="text-xs text-[#555555] font-medium line-clamp-2 leading-relaxed mb-4">
+                        {project.summary}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-[#F0ECE1] flex items-center justify-between text-xs">
+                      <span className="text-[#666666]">
+                        Surface : <strong className="text-[#111111] font-mono">{project.specs.surface}</strong>
+                      </span>
+                      <span className="text-[#C5A059] font-bold group-hover:underline">
+                        Détails & Photos →
+                      </span>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
 
-            {/* Interactive Animated Thumbnails / Slides Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
-              {carouselProjects.map((p, idx) => {
-                const isActive = currentIndex === idx;
-                return (
-                  <button
-                    key={p.id}
-                    onClick={() => handleSelectSlide(idx)}
-                    className={`relative text-left p-2.5 border rounded-xl transition-all duration-300 cursor-pointer overflow-hidden group ${
-                      isActive
-                        ? 'bg-white border-[#C5A059] shadow-md shadow-[#C5A059]/10'
-                        : 'bg-white/80 border-[#E5E2DA] hover:border-[#C5A059]/50 opacity-80 hover:opacity-100'
-                    }`}
-                  >
-                    {/* Active mini progress bar indicator */}
-                    {isActive && !isPaused && (
-                      <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#C5A059]" />
-                    )}
-
-                    <div className="flex items-center gap-2.5">
-                      <div className="relative w-12 h-10 rounded overflow-hidden shrink-0 border border-[#E5E2DA]">
-                        <NextImage
-                          src={p.heroImage}
-                          alt={p.title}
-                          fill
-                          sizes="80px"
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="truncate">
-                        <span className="text-[10px] font-mono text-[#C5A059] block uppercase font-bold">
-                          0{idx + 1} • {p.specs.year}
-                        </span>
-                        <h4 className="text-xs font-bold text-[#111111] truncate group-hover:text-[#C5A059] transition-colors">
-                          {p.title}
-                        </h4>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* "Découvrir plus" Button below Carousel */}
-            <div className="mt-12 text-center">
+            {/* Bottom CTA to browse all projects */}
+            <div className="text-center pt-8">
               <button
                 onClick={handleOpenAllProjects}
                 id="discover-more-projects-btn"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white hover:bg-[#F4F1EA] border border-[#D1D5DB] hover:border-[#C5A059] rounded-lg text-[#111111] text-xs uppercase tracking-[0.18em] font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white hover:bg-[#F4F1EA] border border-[#D1D5DB] hover:border-[#C5A059] rounded-xl text-[#111111] text-xs uppercase tracking-[0.18em] font-bold transition-all shadow-md active:scale-95 cursor-pointer"
               >
-                <span>Découvrir plus de réalisations</span>
+                <span>Accéder à toutes nos réalisations</span>
                 <ArrowRight className="w-4 h-4 text-[#C5A059]" />
               </button>
-              <p className="text-xs text-[#666666] mt-2">
-                Accédez à l'ensemble du catalogue des projets résidentiels, tertiaires et patrimoniaux
-              </p>
             </div>
           </div>
         ) : (
           /* View 2: FULL PROJECTS CATALOGUE (/projets) */
           <div>
-            {/* Top Toolbar: Filters, Search, and Back to Carousel */}
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8">
-              {/* Category Pills */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                {categoryOptions.map((cat) => {
-                  const isActive = activeCategory === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => setActiveCategory(cat.id)}
-                      className={`px-4 py-2 text-xs uppercase tracking-[0.14em] font-semibold whitespace-nowrap rounded-lg transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] text-white shadow-md font-bold'
-                          : 'bg-white hover:bg-[#F4F1EA] text-[#4A4A4A] border border-[#E5E2DA]'
-                      }`}
-                    >
-                      {cat.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Search input & Back button */}
-              <div className="flex items-center gap-3">
-                <div className="relative flex-1 sm:w-64">
-                  <Search className="w-4 h-4 text-[#888888] absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Rechercher un projet..."
-                    className="w-full pl-9 pr-3 py-2 text-xs border border-[#D1D5DB] rounded-lg bg-white text-[#111111] placeholder-[#888888] focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
-                  />
+            {/* Sticky Floating Filter Toolbar */}
+            <div className="sticky top-[64px] sm:top-[72px] z-30 bg-[#FAF9F6]/95 backdrop-blur-md py-3.5 mb-8 border-b border-[#E5E2DA] transition-all">
+              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                {/* Category Pills with horizontal scroll on mobile */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                  {categoryOptions.map((cat) => {
+                    const isActive = activeCategory === cat.id;
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => setActiveCategory(cat.id)}
+                        className={`px-4 py-2 text-xs uppercase tracking-[0.14em] font-semibold whitespace-nowrap rounded-lg transition-all cursor-pointer ${
+                          isActive
+                            ? 'bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] text-white shadow-md font-bold'
+                            : 'bg-white hover:bg-[#F4F1EA] text-[#4A4A4A] border border-[#E5E2DA]'
+                        }`}
+                      >
+                        {cat.label}
+                      </button>
+                    );
+                  })}
                 </div>
 
-                <button
-                  onClick={handleCloseAllProjects}
-                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#111111] hover:text-[#C5A059] bg-white hover:bg-[#F4F1EA] border border-[#D1D5DB] rounded-lg whitespace-nowrap cursor-pointer shadow-xs"
-                >
-                  Vue Carrousel
-                </button>
+                {/* Search input & Result Count */}
+                <div className="flex items-center gap-3">
+                  <div className="relative flex-1 sm:w-64">
+                    <Search className="w-4 h-4 text-[#888888] absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Rechercher un projet..."
+                      className="w-full pl-9 pr-3 py-2 text-xs border border-[#D1D5DB] rounded-lg bg-white text-[#111111] placeholder-[#888888] focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
+                    />
+                  </div>
+
+                  <span className="hidden sm:inline-block text-xs font-mono text-[#777777] whitespace-nowrap bg-white px-3 py-2 border border-[#E5E2DA] rounded-lg">
+                    {filteredProjects.length} projet{filteredProjects.length > 1 ? 's' : ''}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -412,13 +284,16 @@ export function ProjectGrid({
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-                {filteredProjects.map((project) => (
-                  <article
+                {filteredProjects.map((project, idx) => (
+                  <motion.article
                     key={project.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.15 }}
+                    transition={{ duration: 0.5, delay: (idx % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
                     onClick={() => onSelectProject(project)}
                     className="group cursor-pointer flex flex-col bg-white border border-[#E5E2DA] hover:border-[#C5A059] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[#C5A059]/10"
                   >
-                    {/* Image Frame */}
                     <div className="relative aspect-[16/11] w-full overflow-hidden bg-[#FAF9F6]">
                       <NextImage
                         src={project.heroImage}
@@ -439,7 +314,6 @@ export function ProjectGrid({
                       </div>
                     </div>
 
-                    {/* Content */}
                     <div className="p-5 sm:p-6 flex flex-col flex-grow justify-between">
                       <div>
                         <div className="flex items-center justify-between text-[11px] font-mono text-[#777777] mb-1.5">
@@ -458,7 +332,7 @@ export function ProjectGrid({
                         </span>
                       </div>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
               </div>
             )}

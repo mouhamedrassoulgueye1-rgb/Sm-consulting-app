@@ -15,17 +15,17 @@ export function WhatsAppButton() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end group">
       {/* Floating Interactive Tooltip */}
       {showTooltip && (
-        <div className="mb-2 hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/95 backdrop-blur-md border border-emerald-500/30 text-white text-xs shadow-2xl animate-fade-in">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-          <span className="font-medium text-slate-200">
-            Une question ? <strong className="text-emerald-400 font-bold">Contactez-nous sur WhatsApp</strong>
+        <div className="mb-2 hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/95 backdrop-blur-md border border-[#E5E2DA] text-[#111111] text-xs shadow-xl animate-fade-in">
+          <span className="w-2 h-2 rounded-full bg-[#C5A059] shrink-0 animate-pulse" />
+          <span className="font-medium text-[#333333]">
+            Une question ? <strong className="text-[#C5A059] font-bold">Contactez-nous sur WhatsApp</strong>
           </span>
           <button
             onClick={(e) => {
               e.stopPropagation();
               setShowTooltip(false);
             }}
-            className="p-1 text-slate-400 hover:text-white cursor-pointer ml-1"
+            className="p-1 text-[#777777] hover:text-[#111111] cursor-pointer ml-1"
             aria-label="Fermer la bulle"
           >
             <X className="w-3 h-3" />
@@ -33,13 +33,13 @@ export function WhatsAppButton() {
         </div>
       )}
 
-      {/* Main High-Visibility WhatsApp Floating Button */}
+      {/* Main High-Visibility WhatsApp Floating Button - Synoreyni Artistic Direction */}
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         id="floating-whatsapp-btn"
-        className="flex items-center gap-3 px-4 py-3.5 sm:px-5 sm:py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
+        className="flex items-center gap-3 px-4 py-3.5 sm:px-5 sm:py-3.5 rounded-full bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer border border-[#FAF9F6]/30"
         aria-label="Discuter directement sur WhatsApp avec Synoreyni Consulting"
         title="Discuter directement sur WhatsApp (+221 77 000 00 00)"
       >
@@ -50,7 +50,7 @@ export function WhatsAppButton() {
           </svg>
         </div>
         <span className="font-extrabold tracking-wider">WhatsApp</span>
-        <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-emerald-200" />
+        <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-white/60 animate-pulse" />
       </a>
     </div>
   );

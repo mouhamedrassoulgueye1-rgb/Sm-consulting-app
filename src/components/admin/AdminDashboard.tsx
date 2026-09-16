@@ -562,15 +562,18 @@ export function AdminDashboard({
   });
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#111111] flex flex-col font-sans relative">
+      {/* Background architectural grid */}
+      <div className="absolute inset-0 bg-grid-slate-light opacity-30 pointer-events-none" />
+
       {/* Admin Top Navbar */}
-      <header className="bg-slate-950 border-b border-white/10 px-5 sm:px-8 py-4 sticky top-0 z-30 shadow-md">
+      <header className="bg-white border-b border-[#E5E2DA] px-5 sm:px-8 py-4 sticky top-0 z-30 shadow-xs relative">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex flex-col">
-            <h1 className="font-display text-base sm:text-lg font-bold tracking-[0.14em] uppercase text-white leading-none">
-              SYNOREYNI <span className="text-amber-400">ADMIN</span>
+            <h1 className="font-display text-base sm:text-lg font-bold tracking-[0.14em] uppercase text-[#111111] leading-none">
+              SYNOREYNI <span className="text-[#C5A059]">ADMIN</span>
             </h1>
-            <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400 block mt-0.5">
+            <span className="text-[10px] uppercase font-mono tracking-widest text-[#777777] block mt-0.5">
               Dashboard Direction • Dakar, Sénégal
             </span>
           </div>
@@ -578,15 +581,15 @@ export function AdminDashboard({
           <div className="flex items-center gap-3">
             <button
               onClick={onReturnToPublicSite}
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white/5 hover:bg-white/10 text-slate-200 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-white/10"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-[#F4F1EA] text-[#333333] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-[#D1D5DB] shadow-xs"
             >
-              <Eye className="w-4 h-4 text-amber-400" />
+              <Eye className="w-4 h-4 text-[#C5A059]" />
               <span className="hidden sm:inline">Voir le site public</span>
             </button>
 
             <button
               onClick={onLogout}
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-rose-500/20"
+              className="inline-flex items-center gap-1.5 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-rose-200"
               title="Se déconnecter de l'administration"
             >
               <LogOut className="w-4 h-4" />
@@ -597,35 +600,35 @@ export function AdminDashboard({
       </header>
 
       {/* Main Admin Container */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-5 sm:px-8 py-8 space-y-6">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-5 sm:px-8 py-8 space-y-6 relative z-10">
         {/* Flash Notification */}
         {notification && (
-          <div className="p-3.5 bg-emerald-950/90 border border-emerald-500/50 text-emerald-200 text-xs flex items-center justify-between shadow-lg animate-fade-in">
+          <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center justify-between shadow-sm animate-fade-in rounded-lg">
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+              <Check className="w-4 h-4 text-emerald-600 shrink-0" />
               <span className="font-medium">{notification}</span>
             </div>
-            <button onClick={() => setNotification(null)} className="text-emerald-300 hover:text-white rounded">
+            <button onClick={() => setNotification(null)} className="text-emerald-700 hover:text-emerald-950 rounded">
               <X className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* Top Navigation Tabs: Projects vs Categories */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5E2DA] pb-4">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('projects')}
               className={`inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                 activeTab === 'projects'
-                  ? 'bg-amber-400 text-slate-950 shadow-md'
-                  : 'bg-slate-950 hover:bg-slate-800 text-slate-300 border border-white/10'
+                  ? 'bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] text-white shadow-md'
+                  : 'bg-white hover:bg-[#F4F1EA] text-[#4A4A4A] border border-[#E5E2DA] shadow-xs'
               }`}
             >
               <Layers className="w-4 h-4" />
               <span>Projets & Réalisations</span>
               <span className={`px-1.5 py-0.5 text-[10px] font-mono rounded ${
-                activeTab === 'projects' ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-white/10 text-amber-400'
+                activeTab === 'projects' ? 'bg-black/20 text-white font-bold' : 'bg-[#FAF9F6] text-[#C5A059] border border-[#E5E2DA]'
               }`}>
                 {projects.length}
               </span>
@@ -635,14 +638,14 @@ export function AdminDashboard({
               onClick={() => setActiveTab('categories')}
               className={`inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all cursor-pointer ${
                 activeTab === 'categories'
-                  ? 'bg-amber-400 text-slate-950 shadow-md'
-                  : 'bg-slate-950 hover:bg-slate-800 text-slate-300 border border-white/10'
+                  ? 'bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] text-white shadow-md'
+                  : 'bg-white hover:bg-[#F4F1EA] text-[#4A4A4A] border border-[#E5E2DA] shadow-xs'
               }`}
             >
               <Tag className="w-4 h-4" />
               <span>Gestion des Catégories</span>
               <span className={`px-1.5 py-0.5 text-[10px] font-mono rounded ${
-                activeTab === 'categories' ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-white/10 text-amber-400'
+                activeTab === 'categories' ? 'bg-black/20 text-white font-bold' : 'bg-[#FAF9F6] text-[#C5A059] border border-[#E5E2DA]'
               }`}>
                 {categories.length}
               </span>
@@ -654,7 +657,7 @@ export function AdminDashboard({
               <button
                 onClick={handleOpenCreateModal}
                 id="admin-add-project-btn"
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-md"
               >
                 <Plus className="w-4 h-4" />
                 <span>Nouveau Projet</span>
@@ -662,7 +665,7 @@ export function AdminDashboard({
             ) : (
               <button
                 onClick={handleOpenAddCategoryModal}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-md"
               >
                 <Plus className="w-4 h-4" />
                 <span>Ajouter une Catégorie</span>
@@ -676,48 +679,48 @@ export function AdminDashboard({
           <div className="space-y-6">
             {/* Quick Metrics Bar */}
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-              <div className="p-5 bg-slate-950 border border-white/10">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400 block mb-1">
+              <div className="p-5 bg-white border border-[#E5E2DA] rounded-xl shadow-xs">
+                <span className="text-[10px] uppercase font-mono tracking-widest text-[#777777] block mb-1">
                   Total Ouvrages Référencés
                 </span>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-display text-3xl font-bold text-white">{projects.length}</span>
-                  <span className="text-xs text-amber-400 font-semibold">projets au catalogue</span>
+                  <span className="font-display text-3xl font-bold text-[#111111]">{projects.length}</span>
+                  <span className="text-xs text-[#C5A059] font-semibold">projets au catalogue</span>
                 </div>
               </div>
 
-              <div className="p-5 bg-slate-950 border border-white/10">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400 block mb-1">
+              <div className="p-5 bg-white border border-[#E5E2DA] rounded-xl shadow-xs">
+                <span className="text-[10px] uppercase font-mono tracking-widest text-[#777777] block mb-1">
                   Projets en Vedette
                 </span>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-display text-3xl font-bold text-white">
+                  <span className="font-display text-3xl font-bold text-[#111111]">
                     {projects.filter((p) => p.isFeatured !== false).length}
                   </span>
-                  <span className="text-xs text-slate-400 font-semibold">en carrousel accueil</span>
+                  <span className="text-xs text-[#777777] font-semibold">en carrousel accueil</span>
                 </div>
               </div>
 
-              <div className="p-5 bg-slate-950 border border-white/10">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400 block mb-1">
+              <div className="p-5 bg-white border border-[#E5E2DA] rounded-xl shadow-xs">
+                <span className="text-[10px] uppercase font-mono tracking-widest text-[#777777] block mb-1">
                   Catégories Actives
                 </span>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-display text-3xl font-bold text-amber-400">{categories.length}</span>
-                  <span className="text-xs text-slate-400 font-semibold">filières d'architecture</span>
+                  <span className="font-display text-3xl font-bold text-[#C5A059]">{categories.length}</span>
+                  <span className="text-xs text-[#777777] font-semibold">filières d'architecture</span>
                 </div>
               </div>
 
-              <div className="p-5 bg-amber-400/10 border border-amber-400/30 flex items-center justify-between">
+              <div className="p-5 bg-[#FAF9F6] border border-[#E5E2DA] rounded-xl shadow-xs flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-amber-400 font-bold block mb-1">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-[#C5A059] font-bold block mb-1">
                     Action Rapide
                   </span>
-                  <span className="text-xs text-slate-200">Créer un nouvel ouvrage</span>
+                  <span className="text-xs text-[#555555]">Créer un nouvel ouvrage</span>
                 </div>
                 <button
                   onClick={handleOpenCreateModal}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-md"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-xs"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Ajouter</span>
@@ -726,25 +729,25 @@ export function AdminDashboard({
             </div>
 
             {/* Toolbar: Search, Category Filters */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 bg-slate-950 border border-white/10">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 bg-white border border-[#E5E2DA] rounded-xl shadow-xs">
               <div className="flex items-center gap-3 flex-1 flex-wrap">
                 <div className="relative flex-1 min-w-[220px] max-w-md">
-                  <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Search className="w-4 h-4 text-[#777777] absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Rechercher par titre, ville, description..."
-                    className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full pl-10 pr-4 py-2 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] placeholder-[#888888] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-400 font-mono uppercase hidden sm:inline">Filtrer:</span>
+                  <span className="text-xs text-[#555555] font-mono uppercase hidden sm:inline">Filtrer:</span>
                   <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
-                    className="px-3 py-2 bg-slate-900 border border-white/10 text-xs text-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="px-3 py-2 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#333333] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   >
                     <option value="all">Toutes les catégories ({projects.length})</option>
                     {categories.map((c) => {
@@ -759,16 +762,16 @@ export function AdminDashboard({
                 </div>
               </div>
 
-              <div className="text-xs text-slate-400 font-mono">
+              <div className="text-xs text-[#777777] font-mono">
                 {filteredProjects.length} résultat{filteredProjects.length > 1 ? 's' : ''} affiché{filteredProjects.length > 1 ? 's' : ''}
               </div>
             </div>
 
             {/* Projects Table View */}
-            <div className="bg-slate-950 border border-white/10 overflow-hidden shadow-xl">
+            <div className="bg-white border border-[#E5E2DA] rounded-xl overflow-hidden shadow-xs">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-900 border-b border-white/10 text-[11px] uppercase tracking-wider font-mono text-slate-400">
+                  <thead className="bg-[#F8F7F4] border-b border-[#E5E2DA] text-[11px] uppercase tracking-wider font-mono text-[#666666]">
                     <tr>
                       <th className="px-6 py-4">Visuel & Titre</th>
                       <th className="px-6 py-4">Galerie Photos</th>
@@ -779,10 +782,10 @@ export function AdminDashboard({
                       <th className="px-6 py-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-[#F0ECE1]">
                     {filteredProjects.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
+                        <td colSpan={7} className="px-6 py-12 text-center text-[#777777]">
                           Aucun projet trouvé avec les critères actuels.
                         </td>
                       </tr>
@@ -790,20 +793,20 @@ export function AdminDashboard({
                       filteredProjects.map((project) => {
                         const galleryCount = project.galleryImages?.length || 1;
                         return (
-                          <tr key={project.id} className="hover:bg-white/[0.02] transition-colors">
+                          <tr key={project.id} className="hover:bg-[#FAF9F6] transition-colors">
                             {/* Image & Title */}
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-3">
                                 <img
                                   src={project.heroImage}
                                   alt={project.title}
-                                  className="w-14 h-10 object-cover bg-slate-900 border border-white/10 shrink-0"
+                                  className="w-14 h-10 object-cover bg-[#FAF9F6] border border-[#E5E2DA] rounded shrink-0"
                                 />
                                 <div>
-                                  <span className="font-display font-bold text-white text-sm block">
+                                  <span className="font-display font-bold text-[#111111] text-sm block">
                                     {project.title}
                                   </span>
-                                  <span className="text-slate-400 text-[11px] truncate max-w-xs block font-light">
+                                  <span className="text-[#666666] text-[11px] truncate max-w-xs block font-normal">
                                     {project.subtitle}
                                   </span>
                                 </div>
@@ -812,38 +815,38 @@ export function AdminDashboard({
 
                             {/* Gallery count badge */}
                             <td className="px-6 py-4">
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-900 border border-white/10 text-[10px] font-mono text-amber-400">
-                                <ImageIcon className="w-3 h-3" />
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#FAF9F6] border border-[#E5E2DA] text-[10px] font-mono text-[#8C6D2D] rounded">
+                                <ImageIcon className="w-3 h-3 text-[#C5A059]" />
                                 <span>{galleryCount} photo{galleryCount > 1 ? 's' : ''}</span>
                               </span>
                             </td>
 
                             {/* Category */}
                             <td className="px-6 py-4">
-                              <span className="px-2.5 py-1 bg-white/5 border border-white/10 text-[10px] uppercase font-mono text-amber-400">
+                              <span className="px-2.5 py-1 bg-[#FAF9F6] border border-[#E5E2DA] text-[10px] uppercase font-mono text-[#8C6D2D] rounded">
                                 {project.categoryLabel || getCategoryLabel(project.category)}
                               </span>
                             </td>
 
                             {/* Location */}
-                            <td className="px-6 py-4 text-slate-300">
+                            <td className="px-6 py-4 text-[#444444]">
                               {project.location}
                             </td>
 
                             {/* Specs */}
-                            <td className="px-6 py-4 text-slate-300 font-mono text-[11px]">
-                              <div>{project.specs?.year || '2025'}</div>
-                              <div className="text-slate-400">{project.specs?.surface || '-'}</div>
+                            <td className="px-6 py-4 text-[#444444] font-mono text-[11px]">
+                              <div>{project.specs?.year || '2026'}</div>
+                              <div className="text-[#777777]">{project.specs?.surface || '-'}</div>
                             </td>
 
                             {/* Featured */}
                             <td className="px-6 py-4 text-center">
                               {project.isFeatured !== false ? (
-                                <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                                <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 rounded">
                                   Oui
                                 </span>
                               ) : (
-                                <span className="text-slate-500 text-[10px]">Non</span>
+                                <span className="text-[#888888] text-[10px]">Non</span>
                               )}
                             </td>
 
@@ -852,14 +855,14 @@ export function AdminDashboard({
                               <div className="inline-flex items-center gap-2">
                                 <button
                                   onClick={() => handleOpenEditModal(project)}
-                                  className="p-2 bg-white/5 hover:bg-white/10 text-slate-200 hover:text-amber-400 rounded-lg transition-colors cursor-pointer"
+                                  className="p-2 bg-[#FAF9F6] hover:bg-[#F4F1EA] text-[#444444] hover:text-[#C5A059] border border-[#E5E2DA] rounded-lg transition-colors cursor-pointer shadow-xs"
                                   title="Modifier ce projet & ses photos"
                                 >
                                   <Edit3 className="w-4 h-4" />
                                 </button>
                                 <button
                                   onClick={() => setDeleteConfirmId(project.id)}
-                                  className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 hover:text-rose-200 rounded-lg transition-colors cursor-pointer"
+                                  className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border border-rose-200 rounded-lg transition-colors cursor-pointer shadow-xs"
                                   title="Supprimer ce projet"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -881,13 +884,13 @@ export function AdminDashboard({
         {activeTab === 'categories' && (
           <div className="space-y-6">
             {/* Info Banner */}
-            <div className="p-4 bg-slate-950 border border-white/10 flex items-start gap-3">
-              <Info className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="p-4 bg-white border border-[#E5E2DA] rounded-xl shadow-xs flex items-start gap-3">
+              <Info className="w-5 h-5 text-[#C5A059] shrink-0 mt-0.5" />
               <div className="text-xs space-y-1">
-                <span className="font-bold text-white uppercase tracking-wider block">
+                <span className="font-bold text-[#111111] uppercase tracking-wider block">
                   Structure des Catégories & Domaines d'Intervention
                 </span>
-                <p className="text-slate-400 leading-relaxed font-light">
+                <p className="text-[#555555] leading-relaxed font-normal">
                   Vous pouvez ajouter, renommer ou retirer des catégories de projets. Ces catégories apparaissent automatiquement dans les filtres du portfolio public, dans le catalogue et dans les fiches projets.
                 </p>
               </div>
@@ -900,31 +903,31 @@ export function AdminDashboard({
                 return (
                   <div
                     key={cat.id}
-                    className="p-5 bg-slate-950 border border-white/10 flex flex-col justify-between space-y-4 hover:border-white/20 transition-all group"
+                    className="p-5 bg-white border border-[#E5E2DA] rounded-xl shadow-xs flex flex-col justify-between space-y-4 hover:border-[#C5A059] transition-all group"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold px-2 py-0.5 bg-amber-400/10 border border-amber-400/20">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#8C6D2D] font-bold px-2 py-0.5 bg-[#FAF9F6] border border-[#E5E2DA] rounded">
                           {cat.id}
                         </span>
-                        <span className="text-[11px] font-mono text-slate-400">
+                        <span className="text-[11px] font-mono text-[#777777]">
                           {assignedProjects.length} projet{assignedProjects.length > 1 ? 's' : ''}
                         </span>
                       </div>
 
-                      <h3 className="font-display text-base font-bold uppercase text-white">
+                      <h3 className="font-display text-base font-bold uppercase text-[#111111]">
                         {cat.label}
                       </h3>
 
-                      <p className="text-xs text-slate-400 font-light leading-relaxed min-h-[36px]">
+                      <p className="text-xs text-[#555555] font-normal leading-relaxed min-h-[36px]">
                         {cat.description || 'Aucune description détaillée enregistrée.'}
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                    <div className="pt-3 border-t border-[#F0ECE1] flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
                         {cat.isDefault && (
-                          <span className="text-[10px] uppercase font-mono text-slate-500">
+                          <span className="text-[10px] uppercase font-mono text-[#888888]">
                             Standard
                           </span>
                         )}
@@ -933,7 +936,7 @@ export function AdminDashboard({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleOpenEditCategoryModal(cat)}
-                          className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-slate-200 hover:text-amber-400 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1"
+                          className="px-3 py-1.5 bg-[#FAF9F6] hover:bg-[#F4F1EA] text-[#333333] hover:text-[#C5A059] rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1 border border-[#E5E2DA] shadow-xs"
                           title="Modifier cette catégorie"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -942,7 +945,7 @@ export function AdminDashboard({
 
                         <button
                           onClick={() => setDeleteCategoryConfirmId(cat.id)}
-                          className="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 hover:text-rose-200 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1"
+                          className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1 border border-rose-200 shadow-xs"
                           title="Retirer cette catégorie"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -962,19 +965,19 @@ export function AdminDashboard({
       {/* MODAL 1: ADD OR EDIT PROJECT FORM */}
       {/* ========================================================================= */}
       {isFormOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/90 backdrop-blur-md flex items-start sm:items-center justify-center p-2 sm:p-4 md:p-6">
-          <div className="relative w-full max-w-4xl bg-slate-900 border border-white/15 shadow-2xl my-2 sm:my-6 max-h-[92vh] flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-start sm:items-center justify-center p-2 sm:p-4 md:p-6">
+          <div className="relative w-full max-w-4xl bg-white border border-[#E5E2DA] rounded-2xl shadow-2xl my-2 sm:my-6 max-h-[92vh] flex flex-col overflow-hidden text-[#111111]">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-5 sm:px-8 py-4 bg-slate-950 border-b border-white/10 shrink-0 sticky top-0 z-20">
+            <div className="flex items-center justify-between px-5 sm:px-8 py-4 bg-[#FAF9F6] border-b border-[#E5E2DA] shrink-0 sticky top-0 z-20">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                <div className="w-8 h-8 bg-[#FAF9F6] border border-[#C5A059]/40 rounded-lg flex items-center justify-center text-[#C5A059]">
                   {editingProject ? <Edit3 className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                 </div>
                 <div>
-                  <h3 className="font-display text-base sm:text-lg font-bold uppercase text-white leading-tight">
+                  <h3 className="font-display text-base sm:text-lg font-bold uppercase text-[#111111] leading-tight">
                     {editingProject ? 'Modifier le Projet & ses Photos' : 'Ajouter un Nouveau Projet'}
                   </h3>
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-[#777777]">
                     {editingProject ? editingProject.title : 'Catalogue Architectural Synoreyni'}
                   </span>
                 </div>
@@ -983,7 +986,7 @@ export function AdminDashboard({
               <button
                 type="button"
                 onClick={() => setIsFormOpen(false)}
-                className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+                className="p-2 text-[#777777] hover:text-[#111111] hover:bg-[#FAF9F6] rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1011,7 +1014,7 @@ export function AdminDashboard({
               {/* Title & Category */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                     Titre du Projet *
                   </label>
                   <input
@@ -1020,19 +1023,19 @@ export function AdminDashboard({
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="Ex : VILLA ALMADIES"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider">
                       Catégorie *
                     </label>
                     <button
                       type="button"
                       onClick={handleOpenAddCategoryModal}
-                      className="text-[11px] text-amber-400 hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+                      className="text-[11px] text-[#C5A059] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
                     >
                       <Plus className="w-3 h-3" />
                       <span>Créer une Catégorie</span>
@@ -1041,7 +1044,7 @@ export function AdminDashboard({
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -1054,7 +1057,7 @@ export function AdminDashboard({
 
               {/* Subtitle */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                   Sous-titre / Accroche
                 </label>
                 <input
@@ -1062,14 +1065,14 @@ export function AdminDashboard({
                   value={formData.subtitle}
                   onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
                   placeholder="Ex : Résidence bioclimatique d’exception en front de mer"
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                 />
               </div>
 
               {/* Specs: Location, Surface, Year, Cost */}
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                     Localisation (Dakar, etc.)
                   </label>
                   <input
@@ -1077,12 +1080,12 @@ export function AdminDashboard({
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     placeholder="Dakar (Les Almadies), Sénégal"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                     Surface Utile
                   </label>
                   <input
@@ -1090,12 +1093,12 @@ export function AdminDashboard({
                     value={formData.surface}
                     onChange={(e) => setFormData({ ...formData, surface: e.target.value })}
                     placeholder="850 m²"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                     Année de Livraison
                   </label>
                   <input
@@ -1103,14 +1106,14 @@ export function AdminDashboard({
                     value={formData.year}
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                     placeholder="2026"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
               </div>
 
               {/* Cost */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                   Budget / Enveloppe Financière
                 </label>
                 <input
@@ -1118,20 +1121,20 @@ export function AdminDashboard({
                   value={formData.cost}
                   onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
                   placeholder="Confidentiel / Sur demande"
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                 />
               </div>
 
               {/* ========================================================================= */}
               {/* ADVANCED PHOTO MANAGEMENT & EDITING (Photos Déjà Envoyées & Nouvelles) */}
               {/* ========================================================================= */}
-              <div className="p-5 bg-slate-950 border border-white/15 space-y-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2 text-sm font-bold text-white uppercase tracking-wider">
-                    <ImageIcon className="w-4 h-4 text-amber-400" />
+              <div className="p-5 bg-[#FAF9F6] border border-[#E5E2DA] rounded-xl space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E5E2DA]">
+                  <div className="flex items-center gap-2 text-sm font-bold text-[#111111] uppercase tracking-wider">
+                    <ImageIcon className="w-4 h-4 text-[#C5A059]" />
                     <span>Photos du Projet & Galerie ({formData.galleryImages.length} images)</span>
                   </div>
-                  <span className="text-[11px] text-slate-400 font-light">
+                  <span className="text-[11px] text-[#666666] font-normal">
                     Vous pouvez modifier, remplacer ou réorganiser chaque photo envoyée.
                   </span>
                 </div>
@@ -1139,10 +1142,10 @@ export function AdminDashboard({
                 {/* 1. Photo Principale (Hero) */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider">
                       1. Photo Principale (Hero) *
                     </label>
-                    <span className="text-[11px] text-amber-400 font-mono">Vue de couverture principale</span>
+                    <span className="text-[11px] text-[#8C6D2D] font-mono font-semibold">Vue de couverture principale</span>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
@@ -1153,35 +1156,35 @@ export function AdminDashboard({
                         value={formData.heroImage}
                         onChange={(e) => setFormData({ ...formData, heroImage: e.target.value })}
                         placeholder="URL de l'image principale..."
-                        className="w-full px-3.5 py-2 bg-slate-900 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400 pr-10"
+                        className="w-full px-3.5 py-2 bg-white border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#C5A059] pr-10"
                       />
-                      <LinkIcon className="w-3.5 h-3.5 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                      <LinkIcon className="w-3.5 h-3.5 text-[#888888] absolute right-3 top-1/2 -translate-y-1/2" />
                     </div>
 
                     <button
                       type="button"
                       onClick={() => heroFileInputRef.current?.click()}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer shrink-0"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-[#FAF9F6] text-[#333333] border border-[#D1D5DB] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer shrink-0 shadow-xs"
                     >
-                      <Upload className="w-3.5 h-3.5" />
+                      <Upload className="w-3.5 h-3.5 text-[#C5A059]" />
                       <span>Importer du Disque</span>
                     </button>
                   </div>
 
                   {formData.heroImage && (
-                    <div className="flex items-center justify-between p-3 bg-slate-900 border border-white/10">
+                    <div className="flex items-center justify-between p-3 bg-white border border-[#E5E2DA] rounded-lg shadow-xs">
                       <div className="flex items-center gap-3">
                         <img
                           src={formData.heroImage}
                           alt="Photo principale"
-                          className="w-24 h-16 object-cover border border-white/15 shrink-0 bg-slate-950"
+                          className="w-24 h-16 object-cover border border-[#E5E2DA] rounded shrink-0 bg-[#FAF9F6]"
                         />
                         <div className="text-xs space-y-1">
-                          <span className="font-bold text-amber-400 flex items-center gap-1">
-                            <Star className="w-3 h-3 fill-amber-400" />
+                          <span className="font-bold text-[#8C6D2D] flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-[#C5A059] text-[#C5A059]" />
                             Photo Principale Active
                           </span>
-                          <span className="text-slate-400 text-[11px] block">
+                          <span className="text-[#666666] text-[11px] block">
                             S'affiche en grand format sur la page d'accueil et le carrousel.
                           </span>
                         </div>
@@ -1191,7 +1194,7 @@ export function AdminDashboard({
                         <button
                           type="button"
                           onClick={() => handleOpenPhotoEdit('hero')}
-                          className="px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1.5 shadow"
+                          className="px-3 py-1.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-1.5 shadow-xs"
                           title="Modifier ou remplacer cette photo principale"
                         >
                           <RefreshCw className="w-3 h-3" />
@@ -1200,7 +1203,7 @@ export function AdminDashboard({
                         <button
                           type="button"
                           onClick={() => setLightboxImageUrl(formData.heroImage)}
-                          className="p-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-lg transition-colors cursor-pointer"
+                          className="p-2 bg-[#FAF9F6] hover:bg-[#F4F1EA] text-[#333333] hover:text-[#C5A059] border border-[#E5E2DA] rounded-lg transition-colors cursor-pointer"
                           title="Aperçu plein écran"
                         >
                           <Maximize2 className="w-3.5 h-3.5" />
@@ -1211,8 +1214,8 @@ export function AdminDashboard({
                 </div>
 
                 {/* 2. Multiple Gallery Photos (Modifier les photos déjà envoyées) */}
-                <div className="space-y-3 pt-3 border-t border-white/10">
-                  <label className="block text-xs font-bold text-slate-200 uppercase tracking-wider">
+                <div className="space-y-3 pt-3 border-t border-[#E5E2DA]">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider">
                     2. Galerie des Photos Associées & Photos Déjà Envoyées
                   </label>
 
@@ -1225,12 +1228,12 @@ export function AdminDashboard({
                         value={newGalleryUrlInput}
                         onChange={(e) => setNewGalleryUrlInput(e.target.value)}
                         placeholder="Coller l'URL d'une nouvelle photo supplémentaire..."
-                        className="flex-1 px-3.5 py-2 bg-slate-900 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                        className="flex-1 px-3.5 py-2 bg-white border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                       />
                       <button
                         type="button"
                         onClick={handleAddGalleryUrl}
-                        className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-lg cursor-pointer shrink-0 transition-colors"
+                        className="px-3.5 py-2 bg-white hover:bg-[#FAF9F6] text-[#333333] border border-[#D1D5DB] text-xs font-bold uppercase tracking-wider rounded-lg cursor-pointer shrink-0 transition-colors shadow-xs"
                       >
                         + Ajouter URL
                       </button>
@@ -1241,9 +1244,9 @@ export function AdminDashboard({
                       <button
                         type="button"
                         onClick={() => galleryFileInputRef.current?.click()}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 border border-emerald-500/40 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-[#FAF9F6] text-[#333333] border border-[#D1D5DB] text-xs font-bold uppercase tracking-wider rounded-lg transition-colors cursor-pointer shadow-xs"
                       >
-                        <FolderUp className="w-3.5 h-3.5" />
+                        <FolderUp className="w-3.5 h-3.5 text-[#C5A059]" />
                         <span>Importer du Disque (+ Multi)</span>
                       </button>
                     </div>
@@ -1251,12 +1254,12 @@ export function AdminDashboard({
 
                   {/* Visual Gallery Grid with In-Place Modification Buttons */}
                   <div className="pt-2">
-                    <span className="text-[11px] uppercase font-mono text-slate-400 block mb-2 font-medium">
+                    <span className="text-[11px] uppercase font-mono text-[#666666] block mb-2 font-medium">
                       Photos envoyées pour ce projet ({formData.galleryImages.length}) :
                     </span>
 
                     {formData.galleryImages.length === 0 ? (
-                      <div className="p-6 border border-dashed border-white/20 text-center text-slate-500 text-xs">
+                      <div className="p-6 border border-dashed border-[#D1D5DB] rounded-lg text-center text-[#777777] text-xs bg-white">
                         Aucune photo supplémentaire dans la galerie. Ajoutez-en via le disque local ou par URL.
                       </div>
                     ) : (
@@ -1266,12 +1269,12 @@ export function AdminDashboard({
                           return (
                             <div
                               key={index}
-                              className={`p-2.5 bg-slate-900 border-2 transition-all space-y-2 flex flex-col justify-between ${
-                                isHero ? 'border-amber-400 ring-2 ring-amber-400/20' : 'border-white/15'
+                              className={`p-2.5 bg-white border-2 rounded-xl transition-all space-y-2 flex flex-col justify-between shadow-xs ${
+                                isHero ? 'border-[#C5A059] ring-2 ring-[#C5A059]/20' : 'border-[#E5E2DA]'
                               }`}
                             >
                               {/* Image Preview & Badges */}
-                              <div className="relative group overflow-hidden bg-slate-950">
+                              <div className="relative group overflow-hidden bg-[#FAF9F6] rounded-lg">
                                 <img
                                   src={imgUrl}
                                   alt={`Vue ${index + 1}`}
@@ -1279,13 +1282,13 @@ export function AdminDashboard({
                                 />
 
                                 {/* Index Badge */}
-                                <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-slate-950/80 text-white font-mono text-[9px] font-bold border border-white/20">
+                                <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-black/75 text-white font-mono text-[9px] font-bold rounded">
                                   #{index + 1}
                                 </span>
 
                                 {/* Hero Indicator */}
                                 {isHero && (
-                                  <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-amber-400 text-slate-950 font-bold text-[9px] uppercase font-mono shadow">
+                                  <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-white font-bold text-[9px] uppercase font-mono shadow rounded">
                                     ★ Principale
                                   </span>
                                 )}
@@ -1294,7 +1297,7 @@ export function AdminDashboard({
                                 <button
                                   type="button"
                                   onClick={() => setLightboxImageUrl(imgUrl)}
-                                  className="absolute bottom-1.5 right-1.5 p-1 bg-slate-950/80 hover:bg-white text-slate-300 hover:text-slate-950 rounded transition-colors cursor-pointer opacity-80 group-hover:opacity-100"
+                                  className="absolute bottom-1.5 right-1.5 p-1 bg-white/90 hover:bg-white text-[#111111] rounded shadow transition-colors cursor-pointer opacity-80 group-hover:opacity-100"
                                   title="Agrandir la photo"
                                 >
                                   <Maximize2 className="w-3 h-3" />
@@ -1307,9 +1310,9 @@ export function AdminDashboard({
                                 <button
                                   type="button"
                                   onClick={() => handleOpenPhotoEdit(index)}
-                                  className="w-full py-1.5 px-2 bg-amber-400/20 hover:bg-amber-400 text-amber-300 hover:text-slate-950 border border-amber-400/40 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                                  className="w-full py-1.5 px-2 bg-[#FAF9F6] hover:bg-[#F4F1EA] text-[#333333] hover:text-[#C5A059] border border-[#E5E2DA] rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
                                 >
-                                  <RefreshCw className="w-3 h-3" />
+                                  <RefreshCw className="w-3 h-3 text-[#C5A059]" />
                                   <span>Modifier / Remplacer</span>
                                 </button>
 
@@ -1321,7 +1324,7 @@ export function AdminDashboard({
                                       type="button"
                                       onClick={() => handleMoveImageLeft(index)}
                                       disabled={index === 0}
-                                      className="p-1.5 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                      className="p-1.5 bg-[#FAF9F6] hover:bg-[#F4F1EA] text-[#444444] border border-[#E5E2DA] rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                                       title="Déplacer vers la gauche / avant"
                                     >
                                       <ChevronLeft className="w-3.5 h-3.5" />
@@ -1330,7 +1333,7 @@ export function AdminDashboard({
                                       type="button"
                                       onClick={() => handleMoveImageRight(index)}
                                       disabled={index === formData.galleryImages.length - 1}
-                                      className="p-1.5 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                      className="p-1.5 bg-[#FAF9F6] hover:bg-[#F4F1EA] text-[#444444] border border-[#E5E2DA] rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                                       title="Déplacer vers la droite / après"
                                     >
                                       <ChevronRight className="w-3.5 h-3.5" />
@@ -1342,13 +1345,13 @@ export function AdminDashboard({
                                     <button
                                       type="button"
                                       onClick={() => handleSetAsHero(imgUrl)}
-                                      className="px-2 py-1 bg-white/5 hover:bg-amber-400 hover:text-slate-950 text-slate-300 text-[10px] font-semibold uppercase rounded transition-colors"
+                                      className="px-2 py-1 bg-[#FAF9F6] hover:bg-[#FAF9F6] text-[#555555] hover:text-[#C5A059] border border-[#E5E2DA] text-[10px] font-semibold uppercase rounded transition-colors"
                                       title="Définir cette photo comme couverture principale"
                                     >
                                       ☆ En Principale
                                     </button>
                                   ) : (
-                                    <span className="text-[10px] font-mono text-amber-400 font-bold px-1.5">
+                                    <span className="text-[10px] font-mono text-[#8C6D2D] font-bold px-1.5">
                                       Couverture
                                     </span>
                                   )}
@@ -1357,7 +1360,7 @@ export function AdminDashboard({
                                   <button
                                     type="button"
                                     onClick={() => handleRemoveGalleryImage(index)}
-                                    className="p-1.5 bg-rose-500/10 hover:bg-rose-600 text-rose-300 hover:text-white rounded transition-colors cursor-pointer"
+                                    className="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded transition-colors cursor-pointer"
                                     title="Retirer cette photo"
                                   >
                                     <Trash2 className="w-3.5 h-3.5" />
@@ -1376,7 +1379,7 @@ export function AdminDashboard({
               {/* Summary & Concept Description */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                     Résumé / Présentation
                   </label>
                   <textarea
@@ -1384,12 +1387,12 @@ export function AdminDashboard({
                     value={formData.summary}
                     onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                     placeholder="Brève description esthétique et spatiale de l'ouvrage..."
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                  <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                     Concept Architectural & Bioclimatique
                   </label>
                   <textarea
@@ -1397,23 +1400,23 @@ export function AdminDashboard({
                     value={formData.conceptDescription}
                     onChange={(e) => setFormData({ ...formData, conceptDescription: e.target.value })}
                     placeholder="Détails constructifs, ventilation naturelle, apports solaires..."
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
               </div>
 
               {/* Featured in Home Carousel */}
-              <div className="flex items-center gap-3 p-3.5 bg-slate-950 border border-white/10">
+              <div className="flex items-center gap-3 p-3.5 bg-[#FAF9F6] border border-[#E5E2DA] rounded-xl">
                 <input
                   type="checkbox"
                   id="isFeaturedCheck"
                   checked={formData.isFeatured}
                   onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                  className="w-4 h-4 text-amber-400 bg-slate-900 border-white/20 rounded focus:ring-amber-400"
+                  className="w-4 h-4 text-[#C5A059] bg-white border-[#D1D5DB] rounded focus:ring-[#C5A059] cursor-pointer"
                 />
-                <label htmlFor="isFeaturedCheck" className="text-xs text-slate-300 cursor-pointer select-none">
-                  <span className="font-bold text-white block">Mettre en avant sur la page d'accueil</span>
-                  <span className="text-slate-400 text-[11px]">
+                <label htmlFor="isFeaturedCheck" className="text-xs text-[#555555] cursor-pointer select-none">
+                  <span className="font-bold text-[#111111] block">Mettre en avant sur la page d'accueil</span>
+                  <span className="text-[#666666] text-[11px]">
                     Ce projet apparaîtra dans le carrousel animé interactif de la page d'accueil.
                   </span>
                 </label>
@@ -1421,18 +1424,18 @@ export function AdminDashboard({
             </form>
 
             {/* Modal Actions Footer */}
-            <div className="flex items-center justify-end gap-3 px-5 sm:px-8 py-4 bg-slate-950 border-t border-white/10 shrink-0">
+            <div className="flex items-center justify-end gap-3 px-5 sm:px-8 py-4 bg-[#FAF9F6] border-t border-[#E5E2DA] shrink-0">
               <button
                 type="button"
                 onClick={() => setIsFormOpen(false)}
-                className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
+                className="px-5 py-2.5 bg-white hover:bg-[#F4F1EA] text-[#444444] border border-[#D1D5DB] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 form="project-admin-form"
-                className="px-6 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow cursor-pointer active:scale-95"
+                className="px-6 py-2.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-xs cursor-pointer active:scale-95"
               >
                 {editingProject ? 'Enregistrer les Modifications' : 'Créer le Projet'}
               </button>
@@ -1445,7 +1448,7 @@ export function AdminDashboard({
       {/* MODAL 2: DEDICATED PHOTO EDITOR / REPLACEMENT MODAL */}
       {/* ========================================================================= */}
       {photoEditState && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fade-in">
           {/* Hidden File Input for Single Photo Replacement */}
           <input
             type="file"
@@ -1455,11 +1458,11 @@ export function AdminDashboard({
             onChange={handleReplaceSingleFileUpload}
           />
 
-          <div className="relative w-full max-w-lg bg-slate-900 border border-white/20 shadow-2xl p-6 space-y-5 text-white">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="relative w-full max-w-lg bg-white border border-[#E5E2DA] rounded-2xl shadow-2xl p-6 space-y-5 text-[#111111]">
+            <div className="flex items-center justify-between border-b border-[#E5E2DA] pb-3">
               <div className="flex items-center gap-2">
-                <RefreshCw className="w-4 h-4 text-amber-400" />
-                <h3 className="font-display text-base font-bold uppercase text-white">
+                <RefreshCw className="w-4 h-4 text-[#C5A059]" />
+                <h3 className="font-display text-base font-bold uppercase text-[#111111]">
                   {photoEditState.targetIndex === 'hero'
                     ? 'Modifier la Photo Principale'
                     : `Modifier la Photo #${(photoEditState.targetIndex as number) + 1}`}
@@ -1467,7 +1470,7 @@ export function AdminDashboard({
               </div>
               <button
                 onClick={() => setPhotoEditState(null)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                className="p-1.5 text-[#777777] hover:text-[#111111] rounded-lg hover:bg-[#FAF9F6] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1475,10 +1478,10 @@ export function AdminDashboard({
 
             {/* Current vs New Photo Preview */}
             <div className="space-y-2">
-              <span className="text-[11px] uppercase font-mono text-slate-400 font-bold block">
+              <span className="text-[11px] uppercase font-mono text-[#666666] font-bold block">
                 Aperçu du Remplacement :
               </span>
-              <div className="relative h-44 w-full bg-slate-950 border border-white/15 overflow-hidden flex items-center justify-center">
+              <div className="relative h-44 w-full bg-[#FAF9F6] border border-[#E5E2DA] rounded-xl overflow-hidden flex items-center justify-center">
                 {photoEditState.previewUrl ? (
                   <img
                     src={photoEditState.previewUrl}
@@ -1486,7 +1489,7 @@ export function AdminDashboard({
                     className="w-full h-full object-contain"
                   />
                 ) : (
-                  <span className="text-xs text-slate-500">Aucune image sélectionnée</span>
+                  <span className="text-xs text-[#888888]">Aucune image sélectionnée</span>
                 )}
               </div>
             </div>
@@ -1495,22 +1498,22 @@ export function AdminDashboard({
             <div className="space-y-4 pt-2">
               {/* Option A: Import from Local Disk */}
               <div>
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+                <span className="text-xs font-bold text-[#333333] uppercase tracking-wider block mb-1.5">
                   Option 1 : Remplacer par un fichier de l'ordinateur
                 </span>
                 <button
                   type="button"
                   onClick={() => replaceSingleFileInputRef.current?.click()}
-                  className="w-full py-2.5 px-4 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow"
+                  className="w-full py-2.5 px-4 bg-white hover:bg-[#FAF9F6] text-[#111111] border border-[#D1D5DB] text-xs font-bold uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                 >
-                  <Upload className="w-4 h-4" />
+                  <Upload className="w-4 h-4 text-[#C5A059]" />
                   <span>Sélectionner une nouvelle photo sur le disque</span>
                 </button>
               </div>
 
               {/* Option B: Enter / Edit URL */}
               <div>
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+                <span className="text-xs font-bold text-[#333333] uppercase tracking-wider block mb-1.5">
                   Option 2 : Modifier l'adresse URL de l'image
                 </span>
                 <div className="flex gap-2">
@@ -1519,7 +1522,7 @@ export function AdminDashboard({
                     value={photoEditState.previewUrl}
                     onChange={(e) => setPhotoEditState({ ...photoEditState, previewUrl: e.target.value })}
                     placeholder="https://images.unsplash.com/..."
-                    className="flex-1 px-3 py-2 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="flex-1 px-3 py-2 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                   />
                 </div>
               </div>
@@ -1532,9 +1535,9 @@ export function AdminDashboard({
                     id="setAsHeroCheck"
                     checked={photoEditState.isHero}
                     onChange={(e) => setPhotoEditState({ ...photoEditState, isHero: e.target.checked })}
-                    className="w-4 h-4 text-amber-400 bg-slate-950 border-white/20 rounded"
+                    className="w-4 h-4 text-[#C5A059] bg-white border-[#D1D5DB] rounded cursor-pointer"
                   />
-                  <label htmlFor="setAsHeroCheck" className="text-xs text-slate-300 cursor-pointer">
+                  <label htmlFor="setAsHeroCheck" className="text-xs text-[#555555] cursor-pointer">
                     Définir également cette photo comme couverture principale du projet
                   </label>
                 </div>
@@ -1542,18 +1545,18 @@ export function AdminDashboard({
             </div>
 
             {/* Modal Actions */}
-            <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+            <div className="pt-4 border-t border-[#E5E2DA] flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setPhotoEditState(null)}
-                className="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
+                className="px-4 py-2 bg-white hover:bg-[#FAF9F6] text-[#444444] border border-[#D1D5DB] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
               >
                 Annuler
               </button>
               <button
                 type="button"
                 onClick={handleSavePhotoEdit}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow cursor-pointer"
+                className="px-5 py-2 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-xs cursor-pointer"
               >
                 Appliquer le Remplacement
               </button>
@@ -1566,18 +1569,18 @@ export function AdminDashboard({
       {/* MODAL 3: ADD OR EDIT CATEGORY MODAL (Ajout de Catégorie) */}
       {/* ========================================================================= */}
       {isCategoryModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
-          <div className="relative w-full max-w-md bg-slate-900 border border-white/20 shadow-2xl p-6 space-y-5 text-white">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+          <div className="relative w-full max-w-md bg-white border border-[#E5E2DA] rounded-2xl shadow-2xl p-6 space-y-5 text-[#111111]">
+            <div className="flex items-center justify-between border-b border-[#E5E2DA] pb-3">
               <div className="flex items-center gap-2">
-                <Tag className="w-4 h-4 text-amber-400" />
-                <h3 className="font-display text-base font-bold uppercase text-white">
+                <Tag className="w-4 h-4 text-[#C5A059]" />
+                <h3 className="font-display text-base font-bold uppercase text-[#111111]">
                   {editingCategory ? 'Modifier la Catégorie' : 'Ajouter une Nouvelle Catégorie'}
                 </h3>
               </div>
               <button
                 onClick={() => setIsCategoryModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                className="p-1.5 text-[#777777] hover:text-[#111111] rounded-lg hover:bg-[#FAF9F6] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1585,7 +1588,7 @@ export function AdminDashboard({
 
             <form onSubmit={handleSaveCategory} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                   Nom de la Catégorie (Intitulé affiché) *
                 </label>
                 <input
@@ -1594,12 +1597,12 @@ export function AdminDashboard({
                   value={categoryFormData.label}
                   onChange={(e) => setCategoryFormData({ ...categoryFormData, label: e.target.value })}
                   placeholder="Ex : Design & Architecture d'Intérieur"
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                   Identifiant technique (Slug)
                 </label>
                 <input
@@ -1607,15 +1610,15 @@ export function AdminDashboard({
                   value={categoryFormData.id}
                   onChange={(e) => setCategoryFormData({ ...categoryFormData, id: e.target.value })}
                   placeholder="Laisser vide pour génération automatique..."
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400 font-mono"
+                  className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059] font-mono"
                 />
-                <span className="text-[10px] text-slate-500 mt-1 block">
+                <span className="text-[10px] text-[#777777] mt-1 block">
                   Utilisé dans les filtres d'URL (ex: design-interieur).
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                   Description de la Catégorie
                 </label>
                 <textarea
@@ -1623,21 +1626,21 @@ export function AdminDashboard({
                   value={categoryFormData.description}
                   onChange={(e) => setCategoryFormData({ ...categoryFormData, description: e.target.value })}
                   placeholder="Ex : Espaces d'exception, aménagement haut standing et scénographie..."
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-white/10 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full px-3.5 py-2.5 bg-[#FAF9F6] border border-[#D1D5DB] rounded-lg text-xs text-[#111111] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                 />
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex items-center justify-end gap-3">
+              <div className="pt-3 border-t border-[#E5E2DA] flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setIsCategoryModalOpen(false)}
-                  className="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-white hover:bg-[#FAF9F6] text-[#444444] border border-[#D1D5DB] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors cursor-pointer"
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow cursor-pointer"
+                  className="px-5 py-2 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-xs cursor-pointer"
                 >
                   {editingCategory ? 'Enregistrer' : 'Créer la Catégorie'}
                 </button>
@@ -1651,25 +1654,25 @@ export function AdminDashboard({
       {/* MODAL 4: DELETE CATEGORY CONFIRMATION (Retirer une Catégorie) */}
       {/* ========================================================================= */}
       {deleteCategoryConfirmId && (
-        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-slate-900 border border-white/15 p-6 space-y-4 text-white shadow-2xl">
-            <div className="flex items-center gap-3 text-rose-400">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-white border border-[#E5E2DA] rounded-2xl p-6 space-y-4 text-[#111111] shadow-2xl">
+            <div className="flex items-center gap-3 text-rose-600">
               <AlertTriangle className="w-6 h-6 shrink-0" />
-              <h4 className="font-display font-bold text-base uppercase">
+              <h4 className="font-display font-bold text-base uppercase text-[#111111]">
                 Retirer cette catégorie ?
               </h4>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed font-light">
+            <p className="text-xs text-[#555555] leading-relaxed font-light">
               Êtes-vous sûr de vouloir retirer la catégorie{' '}
-              <strong className="text-white font-semibold">
+              <strong className="text-[#111111] font-semibold">
                 "{categories.find((c) => c.id === deleteCategoryConfirmId)?.label}"
               </strong>{' '}
               ?
             </p>
 
             {projects.filter((p) => p.category === deleteCategoryConfirmId).length > 0 && (
-              <div className="p-3 bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs">
+              <div className="p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-lg">
                 ⚠️ Attention :{' '}
                 <strong>
                   {projects.filter((p) => p.category === deleteCategoryConfirmId).length} projet(s)
@@ -1678,16 +1681,16 @@ export function AdminDashboard({
               </div>
             )}
 
-            <div className="pt-4 flex items-center justify-end gap-3">
+            <div className="pt-4 flex items-center justify-end gap-3 border-t border-[#E5E2DA]">
               <button
                 onClick={() => setDeleteCategoryConfirmId(null)}
-                className="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider rounded-lg cursor-pointer"
+                className="px-4 py-2 bg-white hover:bg-[#FAF9F6] text-[#444444] border border-[#D1D5DB] text-xs font-semibold uppercase tracking-wider rounded-lg cursor-pointer"
               >
                 Annuler
               </button>
               <button
                 onClick={handleConfirmDeleteCategory}
-                className="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow cursor-pointer"
+                className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-xs cursor-pointer"
               >
                 Retirer la Catégorie
               </button>
@@ -1700,33 +1703,33 @@ export function AdminDashboard({
       {/* MODAL 5: DELETE PROJECT CONFIRMATION */}
       {/* ========================================================================= */}
       {deleteConfirmId && (
-        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-slate-900 border border-white/15 p-6 space-y-4 text-white shadow-2xl">
-            <div className="flex items-center gap-3 text-rose-400">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-white border border-[#E5E2DA] rounded-2xl p-6 space-y-4 text-[#111111] shadow-2xl">
+            <div className="flex items-center gap-3 text-rose-600">
               <AlertTriangle className="w-6 h-6 shrink-0" />
-              <h4 className="font-display font-bold text-base uppercase">
+              <h4 className="font-display font-bold text-base uppercase text-[#111111]">
                 Supprimer le projet ?
               </h4>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed font-light">
+            <p className="text-xs text-[#555555] leading-relaxed font-light">
               Êtes-vous sûr de vouloir supprimer définitivement le projet{' '}
-              <strong className="text-white font-semibold">
+              <strong className="text-[#111111] font-semibold">
                 "{projects.find((p) => p.id === deleteConfirmId)?.title}"
               </strong>{' '}
               du catalogue Synoreyni ? Cette action est irréversible.
             </p>
 
-            <div className="pt-4 flex items-center justify-end gap-3">
+            <div className="pt-4 flex items-center justify-end gap-3 border-t border-[#E5E2DA]">
               <button
                 onClick={() => setDeleteConfirmId(null)}
-                className="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold uppercase tracking-wider rounded-lg cursor-pointer"
+                className="px-4 py-2 bg-white hover:bg-[#FAF9F6] text-[#444444] border border-[#D1D5DB] text-xs font-semibold uppercase tracking-wider rounded-lg cursor-pointer"
               >
                 Annuler
               </button>
               <button
                 onClick={handleConfirmDelete}
-                className="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow cursor-pointer"
+                className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow-xs cursor-pointer"
               >
                 Supprimer
               </button>
@@ -1740,7 +1743,7 @@ export function AdminDashboard({
       {/* ========================================================================= */}
       {lightboxImageUrl && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setLightboxImageUrl(null)}
         >
           <div className="relative max-w-5xl max-h-[90vh] flex flex-col items-center">

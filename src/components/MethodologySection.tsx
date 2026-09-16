@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface MethodologySectionProps {
   onNavigateContact: () => void;
@@ -38,21 +38,21 @@ export function MethodologySection({ onNavigateContact }: MethodologySectionProp
   ];
 
   return (
-    <section id="methode" className="py-20 sm:py-28 bg-slate-50 relative border-b border-slate-200/80">
+    <section id="methode" className="py-20 sm:py-28 bg-[#FAF9F6] relative border-b border-[#E5E2DA]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 pb-6 border-b border-slate-200">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 pb-6 border-b border-[#E5E2DA]">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-amber-700 font-bold mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#C5A059] font-bold mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
               Méthodologie & Rigueur
             </div>
-            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-slate-950">
+            <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-[#111111]">
               L'Art du Déploiement BTP
             </h2>
           </div>
 
-          <p className="text-sm sm:text-base text-slate-600 font-normal max-w-xl leading-relaxed">
+          <p className="text-sm sm:text-base text-[#4A4A4A] font-normal max-w-xl leading-relaxed">
             Un processus structuré et transparent qui élimine les aléas de chantier 
             et garantit l'alignement absolu entre la vision initiale du plan et la réalité construite.
           </p>
@@ -63,29 +63,29 @@ export function MethodologySection({ onNavigateContact }: MethodologySectionProp
           {steps.map((item) => (
             <div
               key={item.step}
-              className="p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-amber-500 shadow-sm transition-all duration-300 flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-white border border-[#E5E2DA] hover:border-[#C5A059] shadow-xs transition-all duration-300 flex flex-col justify-between group hover:shadow-lg hover:shadow-[#C5A059]/10"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-display text-2xl font-bold text-amber-600">
+                  <span className="font-display text-2xl font-bold text-[#C5A059]">
                     {item.step}
                   </span>
-                  <span className="text-[11px] font-mono text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[11px] font-mono text-[#666666] bg-[#FAF9F6] border border-[#E5E2DA] px-2.5 py-0.5 rounded-full">
                     {item.timeframe}
                   </span>
                 </div>
 
-                <h3 className="font-display text-base font-bold text-slate-950 uppercase tracking-tight mb-2">
+                <h3 className="font-display text-base font-bold text-[#111111] uppercase tracking-tight mb-2 group-hover:text-[#C5A059] transition-colors">
                   {item.title}
                 </h3>
 
-                <p className="text-xs text-slate-600 font-normal leading-relaxed mb-4">
+                <p className="text-xs text-[#4A4A4A] font-normal leading-relaxed mb-4">
                   {item.description}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-700">
-                <span className="text-amber-800 font-semibold block mb-0.5">Livrable :</span>
+              <div className="pt-3 border-t border-[#F0ECE1] text-[11px] text-[#333333]">
+                <span className="text-[#C5A059] font-bold block mb-0.5">Livrable :</span>
                 <span>{item.deliverable}</span>
               </div>
             </div>
@@ -93,19 +93,19 @@ export function MethodologySection({ onNavigateContact }: MethodologySectionProp
         </div>
 
         {/* Bottom CTA Card */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="p-6 sm:p-8 rounded-2xl bg-[#EFECE6] border border-[#E0DDD5] text-[#111111] flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
           <div>
-            <h4 className="font-display text-lg font-bold uppercase tracking-wide text-white">
+            <h4 className="font-display text-lg font-bold uppercase tracking-wide text-[#111111]">
               Vous avez un terrain ou un édifice à valoriser à Dakar ?
             </h4>
-            <p className="text-xs sm:text-sm text-slate-300 font-light mt-1">
+            <p className="text-xs sm:text-sm text-[#555555] font-normal mt-1">
               Bénéficiez d’une pré-étude de faisabilité technique et réglementaire.
             </p>
           </div>
 
           <button
             onClick={onNavigateContact}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors shrink-0 cursor-pointer shadow"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider transition-all shrink-0 cursor-pointer shadow-sm active:scale-95"
           >
             <span>Prendre Rendez-vous</span>
             <ArrowRight className="w-4 h-4" />

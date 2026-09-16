@@ -14,36 +14,36 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
   const whatsappUrl = 'https://wa.me/221770000000?text=' + encodeURIComponent('Bonjour Synoreyni Consulting, je souhaite me renseigner pour un projet à Dakar.');
 
   return (
-    <footer className="bg-slate-950 text-slate-300 text-xs border-t border-white/10 pt-16 pb-12 relative overflow-hidden">
+    <footer className="bg-[#EFECE6] text-[#4A4A4A] text-xs border-t border-[#E5E2DA] pt-16 pb-12 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#E0DDD5]">
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex flex-col">
-              <span className="font-display text-xl font-bold tracking-[0.16em] text-white uppercase leading-none">
+              <span className="font-display text-xl font-bold tracking-[0.16em] text-[#111111] uppercase leading-none">
                 SYNOREYNI
               </span>
-              <span className="font-display text-xs font-extrabold tracking-[0.28em] text-amber-400 uppercase leading-tight mt-0.5">
+              <span className="font-display text-xs font-extrabold tracking-[0.28em] text-[#C5A059] uppercase leading-tight mt-0.5">
                 CONSULTING
               </span>
             </div>
-            <p className="text-slate-400 font-light leading-relaxed text-xs max-w-sm">
+            <p className="text-[#555555] font-normal leading-relaxed text-xs max-w-sm">
               Cabinet d'Ingénierie BTP & Architecture d’Élite à Dakar. Conception bioclimatique, ingénierie de précision et réhabilitation d'ouvrages d'exception au Sénégal et en Afrique de l'Ouest.
             </p>
           </div>
 
           {/* Bureau Officiel Dakar */}
           <div className="lg:col-span-4 space-y-3">
-            <h4 className="text-white font-bold uppercase tracking-wider text-xs flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-amber-400" />
+            <h4 className="text-[#111111] font-bold uppercase tracking-wider text-xs flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
               <span>Bureau Officiel — Dakar, Sénégal</span>
             </h4>
-            <p className="text-slate-400 font-light leading-relaxed">
+            <p className="text-[#555555] font-normal leading-relaxed">
               Route des Almadies, Zone Résidentielle<br />
               Dakar — Sénégal
             </p>
-            <p className="font-mono text-[11px] text-slate-300">
+            <p className="font-mono text-[11px] text-[#333333]">
               Tél : +221 33 820 00 00<br />
               Email : contact@synoreyni-consulting.com
             </p>
@@ -51,7 +51,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
 
           {/* Social Links & WhatsApp & Quick CTA */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-white font-bold uppercase tracking-wider text-xs">
+            <h4 className="text-[#111111] font-bold uppercase tracking-wider text-xs">
               Canaux & Réseaux Sociaux
             </h4>
             <div className="flex items-center gap-2">
@@ -60,7 +60,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-emerald-950/60 border border-emerald-500/40 hover:bg-emerald-500 hover:text-white rounded-lg flex items-center justify-center transition-colors text-emerald-400"
+                className="w-9 h-9 bg-white border border-[#D1D5DB] hover:border-[#C5A059] hover:bg-[#FAF9F6] text-[#333333] hover:text-[#C5A059] rounded-lg flex items-center justify-center transition-colors shadow-xs"
                 title="WhatsApp Direct"
                 aria-label="WhatsApp"
               >
@@ -72,7 +72,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
                 href="https://www.instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-white/5 border border-white/10 hover:bg-amber-400 hover:text-slate-950 rounded-lg flex items-center justify-center transition-colors text-white"
+                className="w-9 h-9 bg-white border border-[#D1D5DB] hover:bg-gradient-to-r hover:from-[#C5A059] hover:to-[#D4AF37] hover:text-white rounded-lg flex items-center justify-center transition-colors text-[#333333] shadow-xs"
                 title="Instagram"
                 aria-label="Instagram"
               >
@@ -84,7 +84,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-white/5 border border-white/10 hover:bg-amber-400 hover:text-slate-950 rounded-lg flex items-center justify-center transition-colors text-white"
+                className="w-9 h-9 bg-white border border-[#D1D5DB] hover:bg-gradient-to-r hover:from-[#C5A059] hover:to-[#D4AF37] hover:text-white rounded-lg flex items-center justify-center transition-colors text-[#333333] shadow-xs"
                 title="X (Twitter)"
                 aria-label="X (Twitter)"
               >
@@ -98,7 +98,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
                 href="https://www.linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-white/5 border border-white/10 hover:bg-amber-400 hover:text-slate-950 rounded-lg flex items-center justify-center transition-colors text-white"
+                className="w-9 h-9 bg-white border border-[#D1D5DB] hover:bg-gradient-to-r hover:from-[#C5A059] hover:to-[#D4AF37] hover:text-white rounded-lg flex items-center justify-center transition-colors text-[#333333] shadow-xs"
                 title="LinkedIn"
                 aria-label="LinkedIn"
               >
@@ -108,7 +108,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
 
             <button
               onClick={() => onNavigate('contact')}
-              className="w-full py-2.5 px-4 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95"
+              className="w-full py-2.5 px-4 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95"
             >
               <span>Demande de Devis</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -117,23 +117,23 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
         </div>
 
         {/* Navigation links */}
-        <div className="py-6 border-b border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
-          <div className="flex flex-wrap items-center gap-6 text-slate-400 uppercase tracking-wider text-[11px]">
-            <button onClick={() => onNavigate('hero')} className="hover:text-amber-400 transition-colors cursor-pointer">
+        <div className="py-6 border-b border-[#E0DDD5] flex flex-wrap items-center justify-between gap-4 text-xs">
+          <div className="flex flex-wrap items-center gap-6 text-[#555555] uppercase tracking-wider text-[11px] font-medium">
+            <button onClick={() => onNavigate('hero')} className="hover:text-[#C5A059] transition-colors cursor-pointer">
               Accueil
             </button>
-            <button onClick={() => onNavigate('projets')} className="hover:text-amber-400 transition-colors cursor-pointer">
+            <button onClick={() => onNavigate('projets')} className="hover:text-[#C5A059] transition-colors cursor-pointer">
               L'exploration des réalisations
             </button>
-            <button onClick={() => onNavigate('a-propos')} className="hover:text-amber-400 transition-colors cursor-pointer">
+            <button onClick={() => onNavigate('a-propos')} className="hover:text-[#C5A059] transition-colors cursor-pointer">
               À Propos
             </button>
-            <button onClick={() => onNavigate('contact')} className="hover:text-amber-400 transition-colors cursor-pointer">
+            <button onClick={() => onNavigate('contact')} className="hover:text-[#C5A059] transition-colors cursor-pointer">
               Contact & Devis
             </button>
           </div>
 
-          <div className="flex items-center gap-3 text-slate-500 font-mono text-[11px]">
+          <div className="flex items-center gap-3 text-[#777777] font-mono text-[11px]">
             <span>Dakar, Sénégal</span>
             <span>•</span>
             <span>Afrique de l'Ouest</span>
@@ -141,7 +141,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
         </div>
 
         {/* Bottom Legal & Private Admin Link */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#777777] text-[11px]">
           <div>
             © {new Date().getFullYear()} SYNOREYNI CONSULTING. Tous droits réservés.
           </div>
@@ -151,7 +151,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
             <button
               onClick={onOpenAdmin}
               id="admin-private-access-btn"
-              className="flex items-center gap-1.5 text-slate-500 hover:text-amber-400 transition-colors text-[11px] cursor-pointer"
+              className="flex items-center gap-1.5 text-[#777777] hover:text-[#C5A059] transition-colors text-[11px] cursor-pointer font-medium"
               title="Accès réservé à la direction"
             >
               <Lock className="w-3 h-3" />
@@ -161,7 +161,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
             {/* Back to top */}
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-1 text-slate-400 hover:text-amber-400 transition-colors uppercase tracking-widest text-[10px] cursor-pointer"
+              className="flex items-center gap-1 text-[#555555] hover:text-[#C5A059] transition-colors uppercase tracking-widest text-[10px] cursor-pointer font-bold"
             >
               <span>Haut de page</span>
               <ArrowUp className="w-3 h-3" />

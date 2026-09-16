@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Award, ShieldCheck, TreePine, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { AGENCY_METRICS } from '../data/projectsData';
 import { NextImage } from './NextImage';
 
@@ -9,19 +9,19 @@ interface AgencyPhilosophyProps {
 
 export function AgencyPhilosophy({ onNavigateContact }: AgencyPhilosophyProps) {
   return (
-    <section id="agence" className="py-20 sm:py-28 bg-slate-50 relative border-b border-slate-200/80">
+    <section id="agence" className="py-20 sm:py-28 bg-[#F4F1EA] relative border-b border-[#E5E2DA]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Top Tag */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-amber-700 font-bold mb-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#C5A059] font-bold mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
             L'Atelier & La Vision
           </div>
-          <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold uppercase text-slate-950 tracking-tight leading-tight">
+          <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold uppercase text-[#111111] tracking-tight leading-tight">
             L'Épure constructive au service de la pérennité.
           </h2>
-          <p className="mt-3 text-base text-slate-600 font-normal leading-relaxed">
-            Établi à Dakar, <strong>Synoreyni Consulting</strong> regroupe des architectes et ingénieurs civils de haut niveau, concevant des espaces où chaque ligne répond à une logique bioclimatique et esthétique irréprochable.
+          <p className="mt-3 text-base text-[#4A4A4A] font-normal leading-relaxed">
+            Établi à Dakar, <strong className="text-[#111111] font-semibold">Synoreyni Consulting</strong> regroupe des architectes et ingénieurs civils de haut niveau, concevant des espaces où chaque ligne répond à une logique bioclimatique et esthétique irréprochable.
           </p>
         </div>
 
@@ -29,7 +29,7 @@ export function AgencyPhilosophy({ onNavigateContact }: AgencyPhilosophyProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-16">
           {/* Visual Column */}
           <div className="lg:col-span-6 relative">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#E5E2DA] shadow-md">
               <NextImage
                 src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80"
                 alt="Cabinet d'architecture Synoreyni Consulting Dakar"
@@ -37,14 +37,14 @@ export function AgencyPhilosophy({ onNavigateContact }: AgencyPhilosophyProps) {
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/70 via-transparent to-transparent opacity-80" />
               
               {/* Floating Quote Stamp */}
-              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-sm text-slate-900">
-                <p className="text-xs italic font-medium leading-relaxed">
+              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-white/95 backdrop-blur-md border border-[#E5E2DA] shadow-sm text-[#111111]">
+                <p className="text-xs italic font-medium leading-relaxed text-[#2D2D2D]">
                   "L'architecture de prestige n'est pas une question d'ostentation, mais de justesse des proportions, d'intégration au climat et de rigueur constructive."
                 </p>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-700 mt-1.5 block font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#C5A059] mt-1.5 block font-bold">
                   — Direction de l’Ingénierie & Architecture, Synoreyni Consulting
                 </span>
               </div>
@@ -52,8 +52,8 @@ export function AgencyPhilosophy({ onNavigateContact }: AgencyPhilosophyProps) {
           </div>
 
           {/* Text Manifesto */}
-          <div className="lg:col-span-6 space-y-5 text-slate-700 font-normal text-sm sm:text-base leading-relaxed">
-            <h3 className="font-display text-xl sm:text-2xl font-bold uppercase text-slate-950 tracking-wide">
+          <div className="lg:col-span-6 space-y-5 text-[#3A3A3A] font-normal text-sm sm:text-base leading-relaxed">
+            <h3 className="font-display text-xl sm:text-2xl font-bold uppercase text-[#111111] tracking-wide">
               Une exigence sans compromis, de l'esquisse au parfait achèvement
             </h3>
             
@@ -71,7 +71,7 @@ export function AgencyPhilosophy({ onNavigateContact }: AgencyPhilosophyProps) {
             <div className="pt-2">
               <button
                 onClick={onNavigateContact}
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-amber-700 hover:text-amber-800 underline underline-offset-4 cursor-pointer"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-[#C5A059] hover:text-[#B88E3E] underline underline-offset-4 cursor-pointer"
               >
                 <span>Échanger avec nos architectes</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -81,21 +81,21 @@ export function AgencyPhilosophy({ onNavigateContact }: AgencyPhilosophyProps) {
         </div>
 
         {/* Metrics Counter Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 p-6 sm:p-8 rounded-2xl bg-white border border-[#E5E2DA] shadow-xs">
           {AGENCY_METRICS.map((metric, idx) => (
             <div key={idx} className="p-3">
               <div className="flex items-baseline gap-1">
-                <span className="font-display text-3xl sm:text-4xl font-bold text-slate-950 tracking-tight">
+                <span className="font-display text-3xl sm:text-4xl font-bold text-[#111111] tracking-tight">
                   {metric.value}
                 </span>
-                <span className="font-display text-lg sm:text-xl font-bold text-amber-600">
+                <span className="font-display text-lg sm:text-xl font-bold text-[#C5A059]">
                   {metric.suffix}
                 </span>
               </div>
-              <p className="mt-1 font-semibold text-slate-900 text-xs sm:text-sm">
+              <p className="mt-1 font-semibold text-[#111111] text-xs sm:text-sm">
                 {metric.label}
               </p>
-              <p className="text-slate-500 text-[11px] mt-0.5">
+              <p className="text-[#666666] text-[11px] mt-0.5">
                 {metric.detail}
               </p>
             </div>

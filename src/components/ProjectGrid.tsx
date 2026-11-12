@@ -97,7 +97,7 @@ export function ProjectGrid({
 
           <p className="text-xs sm:text-sm text-[#4A4A4A] font-normal max-w-lg leading-relaxed">
             {viewAll
-              ? 'Explorez l'intégralité de nos projets d'architecture et constructions au Sénégal et en Afrique de l'Ouest.'
+              ? "Explorez l'intégralité de nos projets d'architecture et constructions au Sénégal et en Afrique de l'Ouest."
               : 'Découvrez nos réalisations phares défilables horizontalement.'}
           </p>
         </motion.div>

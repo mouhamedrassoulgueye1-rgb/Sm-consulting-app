@@ -16,16 +16,16 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
       icon: Building2,
       tag: 'Pôle 01',
       description:
-        'Conception de résidences d'exception, villas côtières et édifices d'envergure. Nous conjuguons volumétrie audacieuse, ventilation naturelle passive et parfaite intégration au climat ouest-africain.',
+        "Conception de résidences d'exception, villas côtières et édifices d'envergure. Nous conjuguons volumétrie audacieuse, ventilation naturelle passive et parfaite intégration au climat ouest-africain.",
     },
     {
       id: 'design',
       title: 'Design',
-      subtitle: 'Architecture d'Intérieur & Haute Facture',
+      subtitle: "Architecture d'Intérieur & Haute Facture",
       icon: Palette,
       tag: 'Pôle 02',
       description:
-        'Création d'ambiances exclusives et intemporelles. Nous sélectionnons des matériaux nobles (marbres, bois précieux, pierres locales) et sculptons les espaces par une scénographie lumineuse sur-mesure.',
+        "Création d'ambiances exclusives et intemporelles. Nous sélectionnons des matériaux nobles (marbres, bois précieux, pierres locales) et sculptons les espaces par une scénographie lumineuse sur-mesure.",
     },
     {
       id: 'ingenierie',
@@ -34,16 +34,16 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
       icon: HardHat,
       tag: 'Pôle 03',
       description:
-        'Calculs d'ingénierie avancés et études techniques de pointe. Nos ingénieurs garantissent la solidité structurelle, l'optimisation des fondations en zone côtière et la conformité aux normes internationales.',
+        "Calculs d'ingénierie avancés et études techniques de pointe. Nos ingénieurs garantissent la solidité structurelle, l'optimisation des fondations en zone côtière et la conformité aux normes internationales.",
     },
     {
       id: 'consultance',
       title: 'Consultance',
-      subtitle: 'Maîtrise d'Ouvrage (AMO) & Stratégie',
+      subtitle: "Maîtrise d'Ouvrage (AMO) & Stratégie",
       icon: Briefcase,
       tag: 'Pôle 04',
       description:
-        'Accompagnement stratégique pour investisseurs privés et institutionnels. De l'audit patrimonial à la passation des marchés en contrat ferme, nous sécurisons vos investissements avec rigueur et transparence.',
+        "Accompagnement stratégique pour investisseurs privés et institutionnels. De l'audit patrimonial à la passation des marchés en contrat ferme, nous sécurisons vos investissements avec rigueur et transparence.",
     },
   ];
 

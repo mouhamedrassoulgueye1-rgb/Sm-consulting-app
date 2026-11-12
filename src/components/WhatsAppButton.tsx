@@ -8,7 +8,7 @@ export function WhatsAppButton() {
 
   const phoneNumber = '221783046161';
   const defaultMessage = encodeURIComponent(
-    'Bonjour Synoreyni Consulting, je souhaite échanger au sujet d'un projet architectural / de construction à Dakar.'
+    "Bonjour Synoreyni Consulting, je souhaite échanger au sujet d'un projet architectural / de construction à Dakar."
   );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${defaultMessage}`;
 

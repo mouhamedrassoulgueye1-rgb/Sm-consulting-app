@@ -2,18 +2,33 @@
 <html lang="fr" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- interactive-widget=resizes-visual : Le clavier virtuel ne pousse plus le layout sur iOS/Android -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-visual" />
     <title>Synoreyni Consulting - Architecture & Bâtiment de Prestige</title>
     <meta name="description" content="Cabinet d'ingénierie et d'architecture d'élite Synoreyni Consulting à Dakar. Conception bioclimatique, ingénierie de précision et réhabilitation d'ouvrages d'exception." />
     <meta property="og:title" content="Synoreyni Consulting - Architecture & Bâtiment de Prestige" />
     <meta property="og:description" content="Cabinet d'ingénierie et d'architecture d'élite Synoreyni Consulting." />
+    <!-- Theme color pour la barre navigateur mobile -->
+    <meta name="theme-color" content="#FAF9F6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- Preconnect Google Fonts — réduit la latence DNS+TCP -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- font-display=swap : Le texte s'affiche immédiatement avec la police système, puis bascule — élimine le FOIT (Flash Of Invisible Text) -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Preload de l'image hero — première image visible, chargée en priorité absolue -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80&fm=webp"
+      fetchpriority="high"
+    />
   </head>
   <body class="bg-[#FAF9F6] text-[#111111] antialiased selection:bg-[#C5A059] selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

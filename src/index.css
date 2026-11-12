@@ -8,11 +8,16 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #FAF9F6; /* Luxury off-white / écru background */
-  color: #1A1A1A; /* Deep anthracite high-contrast text */
+  background-color: #FAF9F6;
+  color: #1A1A1A;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* Améliore le rendu du texte sur tous les appareils */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Évite les délais de 300ms sur les taps mobile */
+  touch-action: manipulation;
 }
 
 .font-display {
@@ -52,24 +57,120 @@ body {
   background: linear-gradient(135deg, #D4AF37 0%, #DFBE58 50%, #C5A059 100%);
 }
 
-/* Hide browser scrollbar for full immersion while preserving smooth scrolling */
+/* =============================================
+   SCROLL — Masquage scrollbar global + iOS inertiel
+   ============================================= */
 html, body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE and Edge */
 }
 
 ::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
   width: 0px;
   height: 0px;
 }
 
-/* Animations */
+/* Scroll inertiel iOS sur tous les conteneurs scrollables */
+[style*="overflow-x: auto"],
+[style*="overflow-y: auto"],
+.overflow-x-auto,
+.overflow-y-auto,
+.overflow-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* =============================================
+   ACCESSIBILITÉ — Respect des préférences utilisateur
+   Désactive toutes les animations pour les utilisateurs
+   qui ont activé "Réduire les animations" dans leur OS
+   ============================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Framer Motion — force les valeurs finales immédiatement */
+  [data-framer-motion] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* =============================================
+   GPU COMPOSITING — Helpers
+   ============================================= */
+.gpu-layer {
+  will-change: transform;
+  transform: translateZ(0);    /* Force promotion sur GPU */
+  backface-visibility: hidden; /* Évite le flickering */
+}
+
+/* Éléments parallax — toujours sur une layer dédiée */
+.parallax-element {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* =============================================
+   MOBILE — Optimisations spécifiques
+   ============================================= */
+/* Élimine l'outline bleu sur tap en mobile */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Focus visible pour l'accessibilité clavier */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #C5A059;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Images — pas de trainée de couleur sur iOS lors du drag */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Évite le zoom automatique sur les inputs en iOS (font-size < 16px) */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+select,
+textarea {
+  font-size: 16px;
+}
+
+@media (min-width: 640px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: inherit;
+  }
 }

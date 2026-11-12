@@ -27,7 +27,7 @@ export function ProjectModal({
 
   const activeImage = allImages[activeImageIndex] || allImages[0];
 
-  const whatsappUrl = 'https://wa.me/221770000000?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.me/221783046161?text=' + encodeURIComponent(
     `Bonjour Synoreyni Consulting, je souhaite me renseigner pour un projet similaire à : "${project.title}".`
   );
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Instagram, Linkedin, MessageSquare, ArrowRight } from 'lucide-react';
 
 interface ContactSectionProps {
@@ -23,7 +24,7 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
     setIsSubmitted(true);
   };
 
-  const whatsappUrl = 'https://wa.me/221770000000?text=' + encodeURIComponent(
+  const whatsappUrl = 'https://wa.me/221783046161?text=' + encodeURIComponent(
     `Bonjour Synoreyni Consulting, je souhaite me renseigner pour un projet (${formData.projectType || 'Architecture / BTP'}).`
   );
 
@@ -33,8 +34,14 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
       <div className="absolute inset-0 bg-grid-slate-light opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-14">
+        {/* Section Header — animation d'entrée cohérente avec les autres sections */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mb-14"
+        >
           <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#C5A059] font-bold mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
             Consultation & Étude de Projet
@@ -43,13 +50,19 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
             Contactez Notre Atelier
           </h2>
           <p className="mt-3 text-[#4A4A4A] font-normal text-sm sm:text-base leading-relaxed">
-            Vous envisagez une construction d’exception, une réhabilitation patrimoniale ou une mission de maîtrise d'œuvre à Dakar et en Afrique de l'Ouest ? Nos architectes et ingénieurs vous répondent avec discrétion.
+            Vous envisagez une construction d'exception, une réhabilitation patrimoniale ou une mission de maîtrise d'œuvre à Dakar et en Afrique de l'Ouest ? Nos architectes et ingénieurs vous répondent avec discrétion.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Column: Official Office Information & Socials */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Left Column — animation décalée */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 space-y-6"
+          >
             {/* Direct WhatsApp Callout Card */}
             <div className="p-6 bg-white border border-[#E5E2DA] rounded-2xl shadow-md space-y-4 relative overflow-hidden">
               <div className="flex items-center justify-between">
@@ -119,8 +132,8 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                   </div>
                   <div>
                     <strong className="block text-[#111111] font-semibold">Ligne Directe / Direction :</strong>
-                    <a href="tel:+221338200000" className="text-[#111111] font-mono font-medium hover:text-[#C5A059]">
-                      +221 33 820 00 00
+                    <a href="tel:+221783046161" className="text-[#111111] font-mono font-medium hover:text-[#C5A059]">
+                      +221 78 304 61 61
                     </a>
                   </div>
                 </div>
@@ -180,10 +193,16 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
               </strong>
               Toutes les requêtes de devis et études préalables font l’objet d’un accord de confidentialité strict (NDA sur demande).
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Interactive Quote & Contact Form */}
-          <div className="lg:col-span-7">
+          {/* Right Column — animation décalée depuis la droite */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7"
+          >
             <div className="p-6 sm:p-8 bg-white border border-[#E5E2DA] rounded-2xl shadow-lg">
               <h3 className="font-display text-xl font-bold text-[#111111] uppercase mb-2">
                 Demander un Devis ou une Consultation
@@ -248,7 +267,7 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                         required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+221 77 000 00 00"
+                        placeholder="+221 78 304 61 61"
                         className="w-full px-3.5 py-2.5 border border-[#D1D5DB] rounded-lg text-xs text-[#111111] bg-[#FAF9F6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
                       />
                     </div>
@@ -295,7 +314,7 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                 </form>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

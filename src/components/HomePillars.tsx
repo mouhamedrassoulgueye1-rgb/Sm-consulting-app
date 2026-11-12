@@ -16,16 +16,16 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
       icon: Building2,
       tag: 'Pôle 01',
       description:
-        'Conception de résidences d’exception, villas côtières et édifices d’envergure. Nous conjuguons volumétrie audacieuse, ventilation naturelle passive et parfaite intégration au climat ouest-africain.',
+        'Conception de résidences d'exception, villas côtières et édifices d'envergure. Nous conjuguons volumétrie audacieuse, ventilation naturelle passive et parfaite intégration au climat ouest-africain.',
     },
     {
       id: 'design',
       title: 'Design',
-      subtitle: 'Architecture d’Intérieur & Haute Facture',
+      subtitle: 'Architecture d'Intérieur & Haute Facture',
       icon: Palette,
       tag: 'Pôle 02',
       description:
-        'Création d’ambiances exclusives et intemporelles. Nous sélectionnons des matériaux nobles (marbres, bois précieux, pierres locales) et sculptons les espaces par une scénographie lumineuse sur-mesure.',
+        'Création d'ambiances exclusives et intemporelles. Nous sélectionnons des matériaux nobles (marbres, bois précieux, pierres locales) et sculptons les espaces par une scénographie lumineuse sur-mesure.',
     },
     {
       id: 'ingenierie',
@@ -34,33 +34,34 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
       icon: HardHat,
       tag: 'Pôle 03',
       description:
-        'Calculs d’ingénierie avancés et études techniques de pointe. Nos ingénieurs garantissent la solidité structurelle, l’optimisation des fondations en zone côtière et la conformité aux normes internationales.',
+        'Calculs d'ingénierie avancés et études techniques de pointe. Nos ingénieurs garantissent la solidité structurelle, l'optimisation des fondations en zone côtière et la conformité aux normes internationales.',
     },
     {
       id: 'consultance',
       title: 'Consultance',
-      subtitle: 'Maîtrise d’Ouvrage (AMO) & Stratégie',
+      subtitle: 'Maîtrise d'Ouvrage (AMO) & Stratégie',
       icon: Briefcase,
       tag: 'Pôle 04',
       description:
-        'Accompagnement stratégique pour investisseurs privés et institutionnels. De l’audit patrimonial à la passation des marchés en contrat ferme, nous sécurisons vos investissements avec rigueur et transparence.',
+        'Accompagnement stratégique pour investisseurs privés et institutionnels. De l'audit patrimonial à la passation des marchés en contrat ferme, nous sécurisons vos investissements avec rigueur et transparence.',
     },
   ];
 
   return (
     <section id="expertises-accueil" className="py-20 sm:py-28 bg-[#F4F1EA] border-t border-b border-[#E5E2DA] relative overflow-hidden">
-      {/* Background subtleties */}
+      {/* Background subtleties — blur réduit sur mobile pour économiser le GPU */}
       <div className="absolute inset-0 bg-grid-slate-light opacity-35 pointer-events-none" />
-      <div className="absolute top-1/2 -left-40 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
-      <div className="absolute bottom-10 -right-40 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Orbes décoratifs cachés sur petits écrans — trop coûteux à compositor sur mobile */}
+      <div className="hidden md:block absolute top-1/2 -left-40 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+      <div className="hidden md:block absolute bottom-10 -right-40 w-96 h-96 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
-        {/* Section Header */}
+        {/* Section Header — once:true */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16 pb-8 border-b border-[#E0DDD5]"
         >
           <div>
@@ -74,22 +75,22 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
           </div>
 
           <p className="text-[#4A4A4A] text-sm sm:text-base max-w-xl font-normal leading-relaxed">
-            De la vision esthétique à l’ingénierie structurelle et à la gestion stratégique, <strong className="text-[#111111] font-semibold">Synoreyni Consulting</strong> intègre tous les métiers de l’acte de bâtir à Dakar.
+            De la vision esthétique à l'ingénierie structurelle et à la gestion stratégique, <strong className="text-[#111111] font-semibold">Synoreyni Consulting</strong> intègre tous les métiers de l'acte de bâtir à Dakar.
           </p>
         </motion.div>
 
-        {/* 4 Pillars Grid (Architecture, Design, Ingénierie, Consultance) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4 Pillars Grid — sm:grid-cols-2 pour tablet, sinon saute de 1→4 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
               <motion.div
                 key={pillar.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="p-7 bg-white border border-[#E5E2DA] flex flex-col rounded-xl shadow-xs hover:border-[#C5A059] transition-all hover:shadow-lg"
+                viewport={{ once: true, amount: 0.15 }} // once:true ici aussi
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="p-7 bg-white border border-[#E5E2DA] flex flex-col rounded-xl shadow-xs hover:border-[#C5A059] transition-[border-color,box-shadow] duration-300 hover:shadow-lg"
               >
                 {/* Top Tag & Icon */}
                 <div className="flex items-center justify-between mb-6">
@@ -118,12 +119,12 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
           })}
         </div>
 
-        {/* Bottom Bar linking to independent About page */}
+        {/* Bottom Bar */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mt-12 p-6 sm:p-8 bg-[#EFECE6] border border-[#E0DDD5] rounded-xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs"
         >
           <div className="space-y-1 text-center sm:text-left">
@@ -137,7 +138,7 @@ export function HomePillars({ onNavigateContact, onNavigateAbout }: HomePillarsP
 
           <button
             onClick={onNavigateAbout}
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-widest transition-all shrink-0 cursor-pointer shadow-sm rounded-lg active:scale-95 min-h-[44px]"
+            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[48px] bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-widest transition-[background] duration-300 shrink-0 cursor-pointer shadow-sm rounded-lg active:scale-95"
           >
             <span>En savoir plus sur le cabinet</span>
             <ArrowRight className="w-4 h-4" />

@@ -11,7 +11,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const whatsappUrl = 'https://wa.me/221770000000?text=' + encodeURIComponent('Bonjour Synoreyni Consulting, je souhaite me renseigner pour un projet à Dakar.');
+  const whatsappUrl = 'https://wa.me/221783046161?text=' + encodeURIComponent('Bonjour Synoreyni Consulting, je souhaite me renseigner pour un projet à Dakar.');
 
   return (
     <footer className="bg-[#EFECE6] text-[#4A4A4A] text-xs border-t border-[#E5E2DA] pt-16 pb-12 relative overflow-hidden">
@@ -44,7 +44,7 @@ export function Footer({ onNavigate, onOpenAdmin }: FooterProps) {
               Dakar — Sénégal
             </p>
             <p className="font-mono text-[11px] text-[#333333]">
-              Tél : +221 33 820 00 00<br />
+              Tél : <a href="tel:+221783046161" className="hover:text-[#C5A059] transition-colors">+221 78 304 61 61</a><br />
               Email : contact@synoreyni-consulting.com
             </p>
           </div>

@@ -155,6 +155,8 @@ export function Header({
             <button
               onClick={() => setMobileMenuOpen(true)}
               id="mobile-menu-toggle"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-panel"
               className="min-w-[44px] min-h-[44px] border rounded-lg focus:outline-none flex items-center justify-center shadow-xs cursor-pointer active:scale-95 transition-colors duration-200 bg-white/90 border-[#E5E2DA] text-[#111111] hover:text-[#C5A059]"
               aria-label="Ouvrir le menu de navigation"
             >
@@ -176,6 +178,7 @@ export function Header({
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
+              id="mobile-nav-panel"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}

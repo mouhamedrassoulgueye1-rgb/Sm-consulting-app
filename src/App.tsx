@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { FeaturedScrollShowcase } from './components/FeaturedScrollShowcase';
 import { ProjectGrid } from './components/ProjectGrid';
-import { ProjectModal } from './components/ProjectModal';
 import { HomePillars } from './components/HomePillars';
-import { AboutPage } from './components/AboutPage';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
-import { AdminLogin } from './components/admin/AdminLogin';
-import { AdminDashboard } from './components/admin/AdminDashboard';
+import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { INITIAL_PROJECTS_DATA, DEFAULT_CATEGORIES } from './data/projectsData';
 import { Project, CategoryItem } from './types/architecture';
 import {
@@ -22,6 +19,23 @@ import {
   deleteCategoryFromCloud,
   seedInitialDataIfEmpty,
 } from './lib/firebase';
+
+// Lazy load non-critical routes & modals to reduce initial bundle size
+const AboutPage = lazy(() => import('./components/AboutPage'));
+const ProjectModal = lazy(() => import('./components/ProjectModal'));
+const AdminLogin = lazy(() => import('./components/admin/AdminLogin'));
+const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-[50vh] flex items-center justify-center bg-[#FAF9F6] p-8">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-[#C5A059] border-t-transparent rounded-full animate-spin" />
+        <span className="font-mono text-xs uppercase tracking-widest text-[#888888]">Chargement...</span>
+      </div>
+    </div>
+  );
+}
 
 type AppRoute = 'home' | 'all-projects' | 'about' | 'admin-login' | 'admin-dashboard';
 
@@ -325,35 +339,39 @@ export default function App() {
   // Route 1: Admin Login (/admin/login)
   if (currentRoute === 'admin-login') {
     return (
-      <AdminLogin
-        onLoginSuccess={() => navigateToRoute('admin-dashboard', '/admin')}
-        onReturnToPublicSite={() => navigateToRoute('home', '/')}
-      />
+      <Suspense fallback={<LoadingFallback />}>
+        <AdminLogin
+          onLoginSuccess={() => navigateToRoute('admin-dashboard', '/admin')}
+          onReturnToPublicSite={() => navigateToRoute('home', '/')}
+        />
+      </Suspense>
     );
   }
 
   // Route 2: Admin Dashboard (/admin protected)
   if (currentRoute === 'admin-dashboard') {
     return (
-      <AdminDashboard
-        projects={projects}
-        categories={categories}
-        onAddProject={handleAddProject}
-        onUpdateProject={handleUpdateProject}
-        onDeleteProject={handleDeleteProject}
-        onAddCategory={handleAddCategory}
-        onUpdateCategory={handleUpdateCategory}
-        onDeleteCategory={handleDeleteCategory}
-        onReturnToPublicSite={() => navigateToRoute('home', '/')}
-        onLogout={handleAdminLogout}
-      />
+      <Suspense fallback={<LoadingFallback />}>
+        <AdminDashboard
+          projects={projects}
+          categories={categories}
+          onAddProject={handleAddProject}
+          onUpdateProject={handleUpdateProject}
+          onDeleteProject={handleDeleteProject}
+          onAddCategory={handleAddCategory}
+          onUpdateCategory={handleUpdateCategory}
+          onDeleteCategory={handleDeleteCategory}
+          onReturnToPublicSite={() => navigateToRoute('home', '/')}
+          onLogout={handleAdminLogout}
+        />
+      </Suspense>
     );
   }
 
   // Route 3: Public Showcase (Home, /a-propos & /projets)
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-amber-400 selection:text-slate-950 flex flex-col font-sans">
-      {/* Dark Luxury Header */}
+    <div className="min-h-screen bg-[#FAF9F6] text-[#111111] selection:bg-[#C5A059] selection:text-white flex flex-col font-sans">
+      {/* Header */}
       <Header
         onNavigate={handleNavigateSection}
         activeSection={getActiveHeaderSection()}
@@ -364,11 +382,13 @@ export default function App() {
       <main className="flex-grow">
         {/* Route: Independent About Page (/a-propos) */}
         {currentRoute === 'about' && (
-          <AboutPage
-            onNavigateHome={() => navigateToRoute('home', '/')}
-            onNavigateProjects={() => navigateToRoute('all-projects', '/projets')}
-            onNavigateContact={() => handleNavigateSection('contact')}
-          />
+          <Suspense fallback={<LoadingFallback />}>
+            <AboutPage
+              onNavigateHome={() => navigateToRoute('home', '/')}
+              onNavigateProjects={() => navigateToRoute('all-projects', '/projets')}
+              onNavigateContact={() => handleNavigateSection('contact')}
+            />
+          </Suspense>
         )}
 
         {/* Route: Home (/) */}
@@ -398,6 +418,11 @@ export default function App() {
                   navigateToRoute('all-projects', '/projets');
                 }
               }}
+            />
+
+            {/* Interactive Before/After Renovation Slider */}
+            <BeforeAfterSlider
+              onNavigateContact={() => handleNavigateSection('contact')}
             />
 
             {/* 4 Core Pillars (Architecture, Design, Ingénierie, Consultance) */}
@@ -434,7 +459,7 @@ export default function App() {
         )}
       </main>
 
-      {/* Deep Dark Footer with Dakar Office, Social Channels & Private Admin Access */}
+      {/* Footer with Dakar Office, Social Channels & Private Admin Access */}
       <Footer
         onNavigate={handleNavigateSection}
         onOpenAdmin={() => navigateToRoute('admin-login', '/admin/login')}
@@ -444,11 +469,13 @@ export default function App() {
       <WhatsAppButton />
 
       {/* Project Detail Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-        onRequestQuoteForProject={handleContactForProject}
-      />
+      <Suspense fallback={null}>
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+          onRequestQuoteForProject={handleContactForProject}
+        />
+      </Suspense>
     </div>
   );
 }

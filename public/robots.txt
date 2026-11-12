@@ -1,0 +1,8 @@
+# Robots.txt for Synoreyni Consulting (SM Consulting)
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+
+# Sitemap
+Sitemap: https://synoreyni-consulting.com/sitemap.xml

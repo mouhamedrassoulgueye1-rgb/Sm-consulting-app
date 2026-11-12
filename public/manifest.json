@@ -1,0 +1,18 @@
+{
+  "short_name": "Synoreyni",
+  "name": "Synoreyni Consulting — Architecture & Ingénierie Dakar",
+  "description": "Cabinet d'ingénierie et d'architecture d'élite à Dakar, Sénégal. Conception bioclimatique, villas d'exception et BTP de prestige.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FAF9F6",
+  "theme_color": "#FAF9F6",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "fr-SN"
+}

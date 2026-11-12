@@ -116,7 +116,7 @@ export function AboutPage({
                 key={idx}
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
                 className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between shadow-xs hover:border-[#C5A059] transition-colors"
               >
@@ -146,7 +146,7 @@ export function AboutPage({
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-6 relative"
             >
@@ -164,7 +164,7 @@ export function AboutPage({
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.4 }}
+                  viewport={{ once: true, amount: 0.4 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                   className="absolute bottom-6 left-6 right-6 p-4 bg-white/95 backdrop-blur-md border border-[#E5E2DA] rounded-xl text-[#111111] shadow-lg"
                 >
@@ -182,7 +182,7 @@ export function AboutPage({
             <motion.div
               initial={{ opacity: 0, x: 25 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-6 space-y-6 text-[#4A4A4A] font-normal leading-relaxed text-sm sm:text-base"
             >
@@ -230,7 +230,7 @@ export function AboutPage({
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
             className="text-center max-w-2xl mx-auto mb-16"
           >
@@ -250,7 +250,7 @@ export function AboutPage({
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.2 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between hover:border-[#C5A059] transition-all hover:shadow-lg shadow-xs"
                 >
@@ -278,7 +278,7 @@ export function AboutPage({
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7 }}
             className="p-8 sm:p-12 bg-white border border-[#E5E2DA] rounded-2xl flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl"
           >

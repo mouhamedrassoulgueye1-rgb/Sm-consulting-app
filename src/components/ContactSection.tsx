@@ -229,10 +229,11 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
+                      <label htmlFor="contact-full-name" className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                         Nom & Prénom *
                       </label>
                       <input
+                        id="contact-full-name"
                         type="text"
                         required
                         value={formData.fullName}
@@ -243,10 +244,11 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
+                      <label htmlFor="contact-email" className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                         Email Professionnel *
                       </label>
                       <input
+                        id="contact-email"
                         type="email"
                         required
                         value={formData.email}
@@ -259,10 +261,11 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
+                      <label htmlFor="contact-phone" className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                         Téléphone / WhatsApp *
                       </label>
                       <input
+                        id="contact-phone"
                         type="tel"
                         required
                         value={formData.phone}
@@ -273,10 +276,11 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
+                      <label htmlFor="contact-project-type" className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                         Nature du Projet
                       </label>
                       <select
+                        id="contact-project-type"
                         value={formData.projectType}
                         onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                         className="w-full px-3.5 py-2.5 border border-[#D1D5DB] rounded-lg text-xs text-[#111111] bg-[#FAF9F6] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
@@ -291,10 +295,11 @@ export function ContactSection({ initialProjectTitle }: ContactSectionProps) {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
+                    <label htmlFor="contact-message" className="block text-xs font-bold text-[#333333] uppercase tracking-wider mb-1">
                       Détails ou Description du Projet
                     </label>
                     <textarea
+                      id="contact-message"
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}

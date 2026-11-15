@@ -206,7 +206,7 @@ export function AboutPage({
               <div className="pt-4 flex flex-wrap items-center gap-4">
                 <button
                   onClick={onNavigateProjects}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-md cursor-pointer active:scale-95 min-h-[44px]"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-[transform,box-shadow] shadow-md cursor-pointer active:scale-95 min-h-[44px]"
                 >
                   <span>Voir nos réalisations</span>
                   <ArrowRight className="w-4 h-4" />
@@ -252,7 +252,7 @@ export function AboutPage({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between hover:border-[#C5A059] transition-all hover:shadow-lg shadow-xs"
+                  className="p-6 bg-[#FAF9F6] border border-[#E5E2DA] rounded-2xl flex flex-col justify-between hover:border-[#C5A059] transition-[border-color,box-shadow] hover:shadow-lg shadow-xs"
                 >
                   <div>
                     <div className="w-12 h-12 rounded-xl bg-white border border-[#E5E2DA] flex items-center justify-center text-[#C5A059] mb-5 shadow-xs">
@@ -297,7 +297,7 @@ export function AboutPage({
             <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full sm:w-auto">
               <button
                 onClick={onNavigateContact}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#B88E3E] hover:from-[#D4AF37] hover:to-[#C5A059] text-white font-bold text-xs uppercase tracking-widest rounded-lg transition-[transform,box-shadow] shadow-md active:scale-95 cursor-pointer min-h-[44px]"
               >
                 <span>Demander un Devis / Étude</span>
                 <ArrowRight className="w-4 h-4" />

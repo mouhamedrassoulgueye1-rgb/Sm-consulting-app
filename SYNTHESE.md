@@ -84,15 +84,15 @@ Dans `src/App.tsx`, les modules lourds et les pages indépendantes sont désorma
   * `public/robots.txt` : Autorise l'indexation publique tout en protégeant les routes `/admin`.
   * `public/sitemap.xml` : Plan de site structuré avec priorités de crawl.
   * `public/manifest.json` : Support PWA (Progressive Web App) pour ajout sur écran d'accueil smartphone.
+* **Icônes de l'application (ajoutées le 15/11/2026)** : le manifeste pointait vers un `/favicon.ico` inexistant (erreur 404, PWA non installable). Ajout dans `public/` de `icon.svg`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` (180px) et `favicon-32.png` (monogramme « SC » or sur fond noir), référencés dans `manifest.json` et dans le `<head>` de `index.html`.
 
 ---
 
-## 🎨 6. Nouveau Composant Interactif : Comparateur Avant / Après
+## 🎨 6. Comparateur Avant / Après — retiré
 
-* **[BeforeAfterSlider.tsx](file:///C:/Users/USER/.gemini/antigravity/scratch/sm-consulting-app/src/components/BeforeAfterSlider.tsx)** :
-  * Composant interactif à double couche avec masque dynamique (`clip-path`) et poignée centrale tactile.
-  * Permet de glisser pour comparer l'état initial brut et le résultat après réhabilitation de prestige (Résidence du Plateau).
-  * Support tactile (swipe), boutons de préréglage rapide (100% Avant, 50/50, 100% Après) et curseur accessible.
+* Le composant `BeforeAfterSlider.tsx` (slider interactif de comparaison avant/après réhabilitation) avait été développé puis **retiré du site** : le fichier est supprimé et son import/usage enlevé de `src/App.tsx`.
+* La page d'accueil enchaîne désormais : Hero → Vitrine défilante → Réalisations → 4 pôles d'expertise → Contact.
+* Le composant reste récupérable dans l'historique Git (commit `a8296fd`) si besoin de le réintégrer.
 
 ---
 
@@ -102,6 +102,30 @@ Dans `src/App.tsx`, les modules lourds et les pages indépendantes sont désorma
 * **Menu Mobile** : Ajout des attributs `aria-expanded={mobileMenuOpen}` et `aria-controls="mobile-nav-panel"` sur le bouton d'ouverture, et `id="mobile-nav-panel"` sur le conteneur du menu.
 * **Pipeline GitHub Actions (`.github/workflows/ci.yml`)** :
   * Déclenchement automatique sur chaque push/PR pour exécuter l'analyse TypeScript (`npm run lint`) et le build de production (`npm run build`).
+  * **Correctif du 15/11/2026** : `npm run lint` échouait sur `FeaturedScrollShowcase.tsx` (prop `key` refusée, car `@types/react` n'est pas installé) — la CI aurait été rouge à chaque push. La `key` est désormais portée par un `React.Fragment`.
+* **Transitions ciblées complétées** : les 3 derniers `transition-all` de `AboutPage.tsx` remplacés par `transition-[transform,box-shadow]` et `transition-[border-color,box-shadow]`.
+
+---
+
+## ✅ 8. Vérification & Tests (15/11/2026)
+
+Tests effectués sur une copie propre du projet (`npm ci` sous Linux, comme sur Vercel/GitHub Actions) :
+
+| Test | Résultat |
+|---|---|
+| `npm run lint` (TypeScript) | ✅ 0 erreur |
+| `npm run build` (Vite) | ✅ Build OK en ~5 s — chunks séparés : `AdminDashboard`, `AdminLogin`, `AboutPage`, `ProjectModal` |
+| Routes `/`, `/projets`, `/a-propos`, `/admin` (via `vite preview`) | ✅ HTTP 200 sur desktop (1440px) et mobile (390px) |
+| Numéro `221783046161` présent | ✅ Sur toutes les routes |
+| Bouton menu mobile | ✅ 44×44px, `aria-expanded` passe à `true`, panneau `#mobile-nav-panel` visible |
+| Labels du formulaire de contact | ✅ 5/5 reliés à leur champ (`htmlFor` → `id`) |
+| Fichiers `robots.txt`, `sitemap.xml`, `manifest.json`, icônes | ✅ Servis en 200 avec le bon type MIME |
+| Erreurs locales (404) | ✅ Aucune (la 404 `/favicon.ico` est corrigée) |
+
+**Points d'attention restants :**
+* ⚠️ Le chunk `vendor-firebase` pèse ~558 kB (146 kB gzip) et déclenche un avertissement Vite (> 500 kB). Piste : ne charger Firestore qu'après le premier affichage, ou n'importer que les modules Firebase utilisés.
+* ℹ️ La route `/admin` sans session affiche bien la connexion, mais l'URL reste `/admin` au lieu de passer à `/admin/login` (sans impact fonctionnel).
+* ℹ️ La mesure « 60 FPS constants » de la matrice n'a pas été re-mesurée ici (nécessite un profilage sur un vrai smartphone via Chrome DevTools > Performance).
 
 ---
 
@@ -116,4 +140,5 @@ Dans `src/App.tsx`, les modules lourds et les pages indépendantes sont désorma
 | **SEO & Snippets Google** | Métadonnées basiques | **JSON-LD Schema.org + Sitemap + Robots** |
 | **Numéro WhatsApp & Téléphone** | Incohérent / Placeholder | **+221 78 304 61 61 (Partout)** |
 | **Conformité Tactile (Touch Targets)** | 36px (hamburger) | **>= 44px partout (Apple HIG)** |
-| **Composant Rénovation** | Photos statiques | **Slider interactif Avant / Après** |
+| **Lint TypeScript (CI)** | Échec sur `FeaturedScrollShowcase.tsx` | **0 erreur — CI verte** |
+| **PWA / Icônes** | `/favicon.ico` introuvable (404) | **Icônes 192/512 + SVG + Apple Touch** |

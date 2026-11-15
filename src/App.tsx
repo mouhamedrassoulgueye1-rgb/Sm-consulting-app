@@ -7,7 +7,6 @@ import { HomePillars } from './components/HomePillars';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
-import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { INITIAL_PROJECTS_DATA, DEFAULT_CATEGORIES } from './data/projectsData';
 import { Project, CategoryItem } from './types/architecture';
 import {
@@ -418,11 +417,6 @@ export default function App() {
                   navigateToRoute('all-projects', '/projets');
                 }
               }}
-            />
-
-            {/* Interactive Before/After Renovation Slider */}
-            <BeforeAfterSlider
-              onNavigateContact={() => handleNavigateSection('contact')}
             />
 
             {/* 4 Core Pillars (Architecture, Design, Ingénierie, Consultance) */}

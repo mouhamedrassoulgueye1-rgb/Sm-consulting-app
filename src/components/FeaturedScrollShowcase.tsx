@@ -176,14 +176,15 @@ export function FeaturedScrollShowcase({
       className="relative bg-[#0d0d0d]"
     >
       {items.map((project, index) => (
-        <StackingPhotoCard
-          key={project.id}
-          project={project}
-          index={index}
-          total={items.length}
-          onSelectProject={onSelectProject}
-          containerRef={sectionRef as React.RefObject<HTMLDivElement>}
-        />
+        <React.Fragment key={project.id}>
+          <StackingPhotoCard
+            project={project}
+            index={index}
+            total={items.length}
+            onSelectProject={onSelectProject}
+            containerRef={sectionRef as React.RefObject<HTMLDivElement>}
+          />
+        </React.Fragment>
       ))}
     </section>
   );
